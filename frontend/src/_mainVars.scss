@@ -1,0 +1,30 @@
+//colors
+$mainBackgroundColor: #1D2123;
+$mainBackgroundColor: #1d212380;
+
+$mainYellow: rgb(255, 217, 0);
+$barColor: #33373b4e;
+$darkShadow: rgba(0, 0, 0, 0.25);
+$accompanyingGrey: #828282;
+
+
+
+
+//elements
+
+
+%blueTitle{
+    line-height: 3rem;
+    font-weight: bolder;
+    letter-spacing: 0.2rem;
+    color: #A4C7C6;
+    font-size: 2.1rem;
+}
+
+
+@mixin defaultShadow($color: $darkShadow, $x: 0px, $y: 4px, $blur: 10px) {
+    box-shadow: $x $y $blur $color;
+}
+
+
+

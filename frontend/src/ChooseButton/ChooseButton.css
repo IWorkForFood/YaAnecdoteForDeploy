@@ -1,0 +1,12 @@
+.choose-button{
+    width: 213px;
+    background-color: rgba(0,0,0,0);
+    border: 1px solid #828282;
+    border-radius: 20px;
+    font-weight: 100;
+    color: #828282;
+}
+.chosen{
+    background-color: rgb(255, 217, 0);
+    color: #242424;
+}

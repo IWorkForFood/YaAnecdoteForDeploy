@@ -1,0 +1,40 @@
+
+.slide-container{
+    padding: 23px 0px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.slide-container__favorite{
+    background: url('/public/Like_play.jpg') 50% 50%/cover no-repeat;
+    display: inline-block;
+    padding: 117px 106px;
+    border-radius: 10px;
+    margin-left: 5px;
+    position: relative;
+    margin-right: 10px;
+    box-shadow: inset 0px -30px 50px #000;
+}
+.slide-container__addplaylist{
+    border: 1px solid rgb(255, 217, 0);
+    display: inline-block;
+    padding: 117px 106px;
+    border-radius: 10px;
+    margin-left: 5px;
+    position: relative;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.slide-container__favorite span{
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+    font-size: 1.5rem;
+}
+.slide-container__addplaylist i{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+}
