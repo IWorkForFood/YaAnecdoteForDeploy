@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getCookie } from 'react-use-cookie';
 
 // Создаем экземпляр axios
 const api = axios.create({
@@ -31,9 +32,13 @@ const refreshAccessToken = async () => {
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('accessToken');
+    const csrfToken = getCookie('csrftoken');
     console.log(token)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    }
+    if (csrfToken && ['post', 'put', 'patch', 'delete'].includes(config.method.toLowerCase())) {
+      config.headers['X-CSRFToken'] = csrfToken;
     }
     return config;
   },

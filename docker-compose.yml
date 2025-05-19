@@ -8,6 +8,7 @@ services:
     volumes:
       - './nginx.conf:/etc/nginx/nginx.conf'
       - '/etc/letsencrypt:/etc/letsencrypt'
+      - './backend/media:/app/media'
     depends_on:
       - backend
       - frontend
@@ -31,6 +32,8 @@ services:
     command: /app/entrypoint.sh  # Явно указываем команду
     volumes:
     - ./backend:/app  # Осторожно! Монтирование после сборки
+    - './backend/media:/app/media'
+
     depends_on:
       - postgres
     networks:

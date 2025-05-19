@@ -47,7 +47,7 @@ export default function MisicBar() {
 
     async function getTracks(){
         api.get('/v1/music/track/')
-        .then(response => setTracks(response.data))
+        .then(response => {setTracks(response.data)})
         .catch(error => console.log(error));
     }
     async function getCollections(){
