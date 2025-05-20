@@ -47,7 +47,7 @@ export default function ListContent() {
       <div className="row gy-3">
         <div className="col-md-3">
           <div className="image-block">
-            <img src='http://127.0.0.1:8000/media/images/covers/tracks/favourite/Like_play.jpg' className="img-fluid rounded d-block" alt="clim" />
+            <img src='http://127.0.0.1:8000/api/media/images/covers/tracks/favourite/Like_play.jpg' className="img-fluid rounded d-block" alt="clim" />
           </div>
         </div>
         <div className="col">
