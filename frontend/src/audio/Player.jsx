@@ -9,6 +9,7 @@ import '../../css/choiseButton.css'
 export default function Player() {
 
   let [playlists, setPlaylists] = useState({});
+  const [isOpen, setOpen] = useState(false)
 
   useEffect(() => {
     const fetchPlaylists = async () => {
@@ -33,11 +34,9 @@ export default function Player() {
     };
 
     fetchPlaylists();
-  }, []);
+  }, [isOpen]);
 
 
-  // для меню
-  const [isOpen, setOpen] = useState(false)
   const menuRef = useRef(null)
   useClickOutside(menuRef, ()=>{
     if (isOpen) setTimeout(() => setOpen(false), 50);
@@ -95,11 +94,17 @@ export default function Player() {
         </button>
 
         <nav className={`choise ${isOpen ? "active" : ""}`} ref={menuRef}>
-          <ul className="choise__list">
+          <ul className="choise__list ">
             {playlists && Object.values(playlists).map((playlist) => {
               console.log("playlists", playlists)
               return(
-                <li className="choise__item" onClick={() => addCurrentTrackToPlaylist(playlist)}>{playlist.title}</li>
+                <li 
+                className="choise__item"
+                 onClick={() => addCurrentTrackToPlaylist(playlist)}
+                 key={playlist.id}
+                >
+                 {playlist.title}
+                </li>
               )
             })}
 

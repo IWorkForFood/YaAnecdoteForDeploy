@@ -12,6 +12,30 @@ export function PlayerProvider({ children }) {
   const audioRef = useRef(null);
   const progressRef = useRef(null);
 
+
+  //---Для обновления списка добавляемых треков
+
+  useEffect(() => {
+    fetchPlaylists();
+  }, []);
+
+  const fetchPlaylists = async () => {
+    try {
+      const response = await api.get('/v1/music/users_collection/');
+      setPlaylists(response.data);
+      console.log('In Player Context:', response.data)
+    } catch (error) {
+      console.error('Ошибка загрузки плейлистов:', error);
+    }
+  };
+
+  const updatePlaylists = async () => {
+    await fetchPlaylists();
+  };
+
+
+  //---
+
   useEffect(() => {
     console.log("изменение:", playlist)
   }, [playlist])
@@ -84,7 +108,8 @@ export function PlayerProvider({ children }) {
     handlePlayPause,
     handleNext,
     handlePrev,
-    progressRef
+    progressRef,
+    updatePlaylists
   };
 
   return (

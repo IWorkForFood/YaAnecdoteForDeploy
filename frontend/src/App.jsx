@@ -28,7 +28,7 @@ function App() {
       
         
         <Routes>
-          <Route element={<ProtectedRoute />}>
+          {/*<Route element={<ProtectedRoute />}>*/}
             
             <Route path='/' element={<Home />} />
             <Route path='/collection_page' element={<CollectPage />} />
@@ -37,7 +37,7 @@ function App() {
             <Route path='/playlist_page/:id' element={<PlayListPage />} />
             <Route path='/audio' element={ <AudioTracks />} />
             <Route path='/bff/:id' element={<PlaylistPag />} />
-          </Route>
+          {/*</Route>*/}
           <Route path='/reg' element={<Registration />} />
           <Route path='/activate/:uid/:token' element={<Activates />} />
           <Route path='/login' element={<Login />} />

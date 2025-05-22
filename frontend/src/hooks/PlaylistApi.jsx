@@ -6,10 +6,10 @@ const createPlaylist = async function(title="Новый плейлист",
         try {
             const response = await api.post('/v1/music/users_collection/', { title, description });
             console.log(title, description);
-            return response.data; // теперь корректно вернётся наружу
+            return response.data;
         } catch (error) {
             console.log(error);
-            throw error; // если нужно пробросить дальше
+            throw error; 
         }
     }
 

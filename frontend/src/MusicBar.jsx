@@ -91,61 +91,65 @@ export default function MisicBar() {
     
     return(
         <div className='MusicBar'>
-            <div class="Music-collector">
-                <div class="main-img-and-tracks">
+            <div class="Music-collector container-fluid">
+                <div class="main-img-and-tracks row">
                     <AudioTracks getCollection={getReorderedTracksCallback}></AudioTracks>
-                    <div class="main-track-img" onClick={ setTracksCallback }> {/*здесь*/}
+                    <div class="main-track-img col-12 col-md-7" onClick={ setTracksCallback }> {/*здесь*/}
                      <i class="fa-solid fa-play"></i>
                     </div>
-                    <div class="top-track-conteiner">
-                        <h2 className='category-title'>Новинки</h2>
-                        <ul class="top-track-list">
-                                { tracks && tracks.length > 0 && tracks.map(function (track){
+                    <div class="top-track-conteiner col-12 col-md-5">
+                        <h2 className='category-title'>Треки</h2>
+                        <div className='top-track-list container-fluid mx-0 px-0'>
+                            <div class="px-0 row g-2">
+                                    { tracks && tracks.length > 0 && tracks.map(function (track){
 
-                                    return (
-                                        <li>
-                                        <div className='top-track-list__representation'>
-                                            <div style={
-                                                { background: `url(${track.cover}) 0 0/cover no-repeat`,
-                                                    display: 'inline-block',
-                                                    padding: '30px',
-                                                    borderRadius: '10px'
-                                                }
-                                                } 
-                                            className='top-track-list__img'></div> 
-                                            <div className='top-track-list__track-description'>
-                                                { tracks && tracks.length > 0 && 
-                                                <>
-                                                    <p>{track.title}</p>
-                                                    <p style={{fontSize:'0.8rem', color: '#555555', }}>{
+                                        return (
+                                            <div className='col-xs-12'>
+                                            <div className='top-track-list__repr-wrapper'>
+                                            <div className='top-track-list__representation'>
+                                                <div style={
+                                                    { background: `url(${track.cover}) 0 0/cover no-repeat`,
+                                                        display: 'inline-block',
+                                                        padding: '30px',
+                                                        borderRadius: '10px'
+                                                    }
+                                                    } 
+                                                className='top-track-list__img'></div> 
+                                                <div className='top-track-list__track-description'>
+                                                    { tracks && tracks.length > 0 && 
+                                                    <>
+                                                        <p>{track.title}</p>
+                                                        <p style={{fontSize:'0.8rem', color: '#555555', }}>{
+                                                        
+                                                        track.author_names.join(", ")
+                                                        
+                                                        }</p>
+                                                    </> 
                                                     
-                                                    track.author_names.join(", ")
-                                                    
-                                                    }</p>
-                                                </> 
+                                                    }
+
+                                                </div>
                                                 
-                                                }
-
                                             </div>
+                                            <button
+                                                className={`top-track-list__reaction-button like-button
+                                                    ${activeLikes[track.id] ? 'active' : ''}`}
+                                                onClick={() => toggleLike(track.id, '/v1/music/track/')}
+                                            >
+                                            <i class={`bi bi-heart${activeLikes[track.id] ? "-fill" : ""} like-button__like-heart`} width="24" height="24" style={{color:'rgb(255, 217, 0)'}}></i>
                                             
+                                            </button>
+                                            </div>
                                         </div>
-                                        <button
-                                            className={`top-track-list__reaction-button like-button
-                                                 ${activeLikes[track.id] ? 'active' : ''}`}
-                                            onClick={() => toggleLike(track.id, '/v1/music/track/')}
-                                        >
-                                        <i class={`bi bi-heart${activeLikes[track.id] ? "-fill" : ""} like-button__like-heart`} width="24" height="24" style={{color:'rgb(255, 217, 0)'}}></i>
+                                        )
+                                    }) 
                                         
-                                        </button>
-                                    </li>
-                                    )
-                                }) 
-                                    
-                                }
-                        </ul>
+                                    }
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className='last-collections'>
+                <div className='last-collections col-12'>
                     <h2 className='category-title'>Коллекция сборников</h2>
                     <div className='last-collections__swipe-list'>
                         { collections && collections.length > 0 && collections.map(function(collection){
@@ -182,6 +186,8 @@ export default function MisicBar() {
                             )
                         })
                         }
+
+                    
                     </div>
                 </div>
                 <div className = "collection-list">

@@ -23,6 +23,7 @@ html, body{
     -ms-txt-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
+    overflow: scroll !important;
     /* Это предотвращает автоматическое изменение размера текста на мобильных устройствах. */
 }
 

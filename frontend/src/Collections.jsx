@@ -15,7 +15,7 @@ const CollectionSlide = function(){
     const [collections, setCollections] = useState([])
     const [playlists, setPlaylists] = useState([])
     const [tab, setTab] = useState('playlists')
-    const { setPlaylist, setTrack } = usePlayer();
+    const { setPlaylist, setTrack, updatePlaylists } = usePlayer();
 
     
 
@@ -93,7 +93,9 @@ const CollectionSlide = function(){
                     </Link>
                     <div className='slide-container__addplaylist' onClick={async () => {
                             try {
+                            
                             const playlistData = await doPlayListCreation();
+                            await updatePlaylists();
                             const albumInfo = {
                                 id: playlistData.id,
                                 cover: playlistData.cover,
