@@ -37,6 +37,7 @@
 }
 
 .top-track-list__representation{
+    width: 100%;
     display: flex;
     flex: stretch;
 }
@@ -47,6 +48,12 @@
     flex-direction: column;
     justify-content: space-around;
 }
+
+.top-track-list__repr-wrapper{
+    margin: 5px 0px;
+    width: 100%;
+}
+
 .like-button{
     border-radius: 50%;
     display: flex;
@@ -94,4 +101,6 @@
     margin-bottom: 13px;
 }
 
-
+.item-1{
+    background-color: aqua;
+}

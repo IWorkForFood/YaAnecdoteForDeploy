@@ -7,6 +7,12 @@ import { getUserInfo } from './hooks/getUserInfo'
 import { deleteLikeUser, addLikeUser } from './hooks/moveLikeUser'
 import { usePlayer } from './audio/PlayerContext';
 import AudioTracks from './audio/AudioTracks'
+import Carousel from './carousel/Carousel'
+import TrackBar from './audio/TrackBar'
+
+
+
+
 
 export default function MisicBar() {
 
@@ -88,6 +94,10 @@ export default function MisicBar() {
             [trackId]: !isLiked
         }));
     };
+
+    const seTrackForSlider = (track) => {
+        setTrack(track)
+    }
     
     return(
         <div className='MusicBar'>
@@ -97,55 +107,91 @@ export default function MisicBar() {
                     <div class="main-track-img col-12 col-md-7" onClick={ setTracksCallback }> {/*здесь*/}
                      <i class="fa-solid fa-play"></i>
                     </div>
+                    
+
                     <div class="top-track-conteiner col-12 col-md-5">
                         <h2 className='category-title'>Треки</h2>
-                        <div className='top-track-list container-fluid mx-0 px-0'>
-                            <div class="px-0 row g-2">
-                                    { tracks && tracks.length > 0 && tracks.map(function (track){
+                        <div className='col-12'>
+                            <Carousel>
+                                    {
+                                    tracks && tracks.length > 0 ?
+                                    tracks.reduce((result, curtrack, index) => {
+                                        if (index % 3 === 0) result.push([]);
 
-                                        return (
-                                            <div className='col-xs-12'>
-                                            <div className='top-track-list__repr-wrapper'>
-                                            <div className='top-track-list__representation'>
-                                                <div style={
-                                                    { background: `url(${track.cover}) 0 0/cover no-repeat`,
-                                                        display: 'inline-block',
-                                                        padding: '30px',
-                                                        borderRadius: '10px'
-                                                    }
-                                                    } 
-                                                className='top-track-list__img'></div> 
-                                                <div className='top-track-list__track-description'>
-                                                    { tracks && tracks.length > 0 && 
-                                                    <>
-                                                        <p>{track.title}</p>
-                                                        <p style={{fontSize:'0.8rem', color: '#555555', }}>{
-                                                        
-                                                        track.author_names.join(", ")
-                                                        
-                                                        }</p>
-                                                    </> 
-                                                    
-                                                    }
-
-                                                </div>
-                                                
-                                            </div>
-                                            <button
-                                                className={`top-track-list__reaction-button like-button
-                                                    ${activeLikes[track.id] ? 'active' : ''}`}
-                                                onClick={() => toggleLike(track.id, '/v1/music/track/')}
-                                            >
-                                            <i class={`bi bi-heart${activeLikes[track.id] ? "-fill" : ""} like-button__like-heart`} width="24" height="24" style={{color:'rgb(255, 217, 0)'}}></i>
+                                        result[result.length - 1].push(curtrack);
+                                        return result;
+                                    }, []).map((group, groupIndex) => (
+                                        <Carousel.Page>
+                                        <div className='joiner-3-tracks'
+                                            key={`group-${groupIndex}`}
                                             
-                                            </button>
-                                            </div>
-                                        </div>
+                                            style={{
+                                                minWidth: '100%', // Соответствует ITEM_WIDTH в каруселе
+                                                padding: '0 10px'
+                                            }}
+                                        >
+                                            {group.map((track) => (
+                                                <div className='top-track-list__repr-wrapper'
+                                                key={track.id}
+                                                onClick={() => seTrackForSlider(track)}
+                                                >
+                                                <div 
+                                                className='top-track-list__representation'
+                                                >
+                                                    <div style={
+                                                        { background: `url(${track.cover}) 0 0/cover no-repeat`,
+                                                            display: 'inline-block',
+                                                            padding: '30px',
+                                                            borderRadius: '10px'
+                                                        }
+                                                        } 
+                                                    className='top-track-list__img'></div> 
+                                                    <div className='top-track-list__track-description'>
+                                                        { tracks && tracks.length > 0 && 
+                                                        <>
+                                                            <p>{track.title}</p>
+                                                            <p style={{fontSize:'0.8rem', color: '#555555', }}>{
+                                                            
+                                                            track.author_names.join(", ")
+                                                            
+                                                            }</p>
+                                                        </> 
+                                                        
+                                                        }
+
+                                                    </div>
+                                                    
+                                                </div>
+                                                <button
+                                                    className={`top-track-list__reaction-button like-button
+                                                        ${activeLikes[track.id] ? 'active' : ''}`}
+                                                    onClick={() => toggleLike(track.id, '/v1/music/track/')}
+                                                >
+                                                <i class={`bi bi-heart${activeLikes[track.id] ? "-fill" : ""} like-button__like-heart`} width="24" height="24" style={{color:'rgb(255, 217, 0)'}}></i>
+                                                
+                                                </button>
+                                                </div>
+                                            )  
+                                            )}
+                                            </div> 
+                                        </Carousel.Page>      
                                         )
-                                    }) 
-                                        
+                                    )
+                                :
+                                
+                                <div
+                                style = {
+                                    {
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
                                     }
-                            </div>
+                                }
+                                >
+                                    Треков нет
+                                </div>
+                                }
+                            </Carousel>
                         </div>
                     </div>
                 </div>
@@ -189,6 +235,24 @@ export default function MisicBar() {
 
                     
                     </div>
+                </div>
+                
+                <div className='col-12'>
+                    <Carousel>
+                        <Carousel.Page>
+                            <div className='item item-1' style={{backgroundColor: 'red', width: '100%', height: '100%'}}>item1</div>
+                        </Carousel.Page>
+                        
+                        <Carousel.Page>
+                            <div className='item' style={{backgroundColor: 'green', width: '100%', height: '100%'}}>item2</div>
+                        </Carousel.Page>
+
+                        <Carousel.Page>
+                            <div className='item' style={{backgroundColor: 'blue', width: '100%', height: '100%'}}>item3</div>
+                        </Carousel.Page>
+                        
+                        
+                    </Carousel>
                 </div>
                 <div className = "collection-list">
                     
