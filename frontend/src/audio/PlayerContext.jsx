@@ -86,6 +86,7 @@ export function PlayerProvider({ children }) {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
+      audioRef.current.replaceWith(audioRef.current.cloneNode());
     }
 
     const audio = new Audio(track.audio_file);

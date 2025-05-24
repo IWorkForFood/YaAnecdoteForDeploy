@@ -24,7 +24,6 @@ const [playlistData, setPlaylistData] = useState(null);
   return (
     <div>
       <h1>{playlistData.title}</h1>
-      &lkkkkkkk
       {playlistData.tracks.map(track => (
         <div key={track.id} onClick={() => setTrack(track)} style={{backgroundColor:'red'}} >
           ▶ {track.title}

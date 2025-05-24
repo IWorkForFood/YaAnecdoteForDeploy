@@ -71,7 +71,7 @@ export default function ListContent({tracks, albumInfo}) {
             <p>
               { albumInfo.description }
             </p>
-            <p>64 анека ~ 16 hrs+</p>
+            <p>64 анека</p>
             <div className="button-toolbar">
               <button className="btn btn-secondary rounded-pill" >
                 <i class="bi bi-play-fill"></i> Play
