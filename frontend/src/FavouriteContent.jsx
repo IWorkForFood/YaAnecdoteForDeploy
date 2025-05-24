@@ -60,7 +60,7 @@ export default function ListContent() {
             </p>
             <p>{ /* `анеков: ${trackCount}` */ }</p>
             <div className="button-toolbar">
-              <button className="btn btn-secondary rounded-pill" >
+              <button className="btn btn-secondary rounded-pill" onClick={ () => {setTrack(trackList[0])}}>
                 <i class="bi bi-play-fill"></i> Play
               </button>
             </div>

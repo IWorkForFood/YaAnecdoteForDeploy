@@ -76,9 +76,6 @@ export default function ListContent({tracks, albumInfo}) {
               <button className="btn btn-secondary rounded-pill" >
                 <i class="bi bi-play-fill"></i> Play
               </button>
-              <button className="btn btn-secondary rounded-pill">
-              <i class="bi bi-node-plus-fill"></i> Add Track
-              </button>
               <button className="btn btn-secondary rounded-pill"
               onClick={() => toggleCollectionLike(albumInfo.id, '/v1/music/authors_collection/')}>
                 <i class={`bi bi-heart${activeCollectionLike ? "-fill" : ""}  text-danger`}></i> Like

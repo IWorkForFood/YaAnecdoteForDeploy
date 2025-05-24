@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useRef, useEffect } from 'react';
+import api from '../FetchLogic'
 
 const PlayerContext = createContext();
 
@@ -8,6 +9,7 @@ export function PlayerProvider({ children }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState('00:00');
+  const [listenStartTime, setListenStartTime] = useState(null);
 
   const audioRef = useRef(null);
   const progressRef = useRef(null);
@@ -19,12 +21,24 @@ export function PlayerProvider({ children }) {
     try {
       const duration = Math.floor((endTime - startTime) / 1000); // в секундах
       
-      await api.post('/listening-history/', {
-        track_id: track.id,
+      console.log(
+        `Отправляемые дан${endTime} - ${startTime}`
+      );
+
+      console.log("new date:", new Date(startTime).toISOString())
+      await api.post('/v1/music/listening-history/', {
+        track: track.id,
         start_time: new Date(startTime).toISOString(),
         end_time: new Date(endTime).toISOString(),
         duration_seconds: duration
+      },{
+      
+        headers: {
+          'Content-Type': 'application/json' // Явно указываем тип контента
+        }
       });
+
+      
       
       console.log('Listening data saved successfully');
     } catch (error) {
@@ -77,9 +91,12 @@ export function PlayerProvider({ children }) {
     const audio = new Audio(track.audio_file);
     audioRef.current = audio;
     setCurrentTrack({ ...track, duration: '00:00' }); // временно
-    setIsPlaying(false);
     setProgress(0);
     setCurrentTime('00:00');
+    setTimeout(() => audioRef.current.play(), 50)
+    setIsPlaying(true);
+    setListenStartTime(Date.now());
+    
 
     audio.addEventListener('loadeddata', () => {
       setCurrentTrack(prev => ({ ...prev, duration: toMinAndSec(audio.duration) }));
@@ -90,37 +107,63 @@ export function PlayerProvider({ children }) {
       const percent = (currentTime / duration) * 100;
       setProgress(percent);
       setCurrentTime(toMinAndSec(currentTime));
+
+      if (isPlaying && !listenStartTime) {
+        setListenStartTime(Date.now());
+      }
     });
 
-    audio.addEventListener('ended', handleNext);
+    audio.addEventListener('ended', () => {
+      if (listenStartTime) {
+        sendListeningData(track, listenStartTime, Date.now());
+        setListenStartTime(null);
+      }
+      handleNext();
+    });
   };
 
   const handlePlayPause = () => {
     if (!audioRef.current) return;
     if (isPlaying) {
+      if (listenStartTime) {
+
+        sendListeningData(currentTrack, listenStartTime, Date.now());
+        setListenStartTime(null);
+      }
       audioRef.current.pause();
     } else {
+      setListenStartTime(Date.now());
       audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
   };
 
   const handleNext = () => {
+    if (listenStartTime) {
+        sendListeningData(currentTrack, listenStartTime, Date.now());
+        setListenStartTime(Date.now());
+      }
     if (!playlist.length || !currentTrack) return;
     const index = playlist.findIndex(t => t.id === currentTrack.id);
     const next = playlist[(index + 1) % playlist.length];
     setTrack(next);
     setTimeout(() => audioRef.current.play(), 50);
     setIsPlaying(true);
+    
   };
 
   const handlePrev = () => {
+    if (listenStartTime) {
+        sendListeningData(currentTrack, listenStartTime, Date.now());
+        setListenStartTime(Date.now());
+      }
     if (!playlist.length || !currentTrack) return;
     const index = playlist.findIndex(t => t.id === currentTrack.id);
     const prev = playlist[(index - 1 + playlist.length) % playlist.length];
     setTrack(prev);
     setTimeout(() => audioRef.current.play(), 50);
     setIsPlaying(true);
+    
   };
 
   const value = {

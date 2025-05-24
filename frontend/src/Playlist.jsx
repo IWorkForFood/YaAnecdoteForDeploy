@@ -140,7 +140,7 @@ export default function Playlist({ albumId }) {
     const MainButtonList = function ({ albumInfo, navigate }) {
         return (
             <div className="button-toolbar">
-                <button className="btn btn-secondary rounded-pill">
+                <button className="btn btn-secondary rounded-pill" onClick={ () => {setTrack(trackList[0])}}>
                     <i className="bi bi-play-fill"></i> Play
                 </button>
                 <button
