@@ -3,7 +3,7 @@ import { getCookie } from 'react-use-cookie';
 
 // Создаем экземпляр axios
 const api = axios.create({
-  baseURL: 'http://127.0.0.1/api/api/', // Базовый URL вашего API
+  baseURL: 'http://89.111.137.192/api/api/', // Базовый URL вашего API
   headers: {
     'Content-Type': 'application/json',
   },
@@ -15,7 +15,7 @@ const refreshAccessToken = async () => {
     const refreshToken = localStorage.getItem('refreshToken');
     if (!refreshToken) throw new Error('No refresh token available');
 
-    const response = await axios.post('http://127.0.0.1/api/api/token/refresh/', {
+    const response = await axios.post('http://89.111.137.192/api/api/token/refresh/', {
       refresh: refreshToken,
     });
 

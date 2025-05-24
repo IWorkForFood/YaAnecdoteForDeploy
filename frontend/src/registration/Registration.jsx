@@ -113,7 +113,7 @@ export default function Registration() {
 
     try {
       // 1. Отправляем данные на сервер для регистрации
-      const regResponse = await axios.post('http://127.0.0.1/api/api/auth/v1/users/', {
+      const regResponse = await axios.post('http://89.111.137.192/api/api/auth/v1/users/', {
         email: email,
         username: username,
         password: password,

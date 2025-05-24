@@ -39,7 +39,7 @@ class ActivationViewSendler(View):
             frontend_url = f'http://localhost:5173/activate/error?message=connection_error'
             return HttpResponseRedirect(frontend_url)'
         '''
-        return HttpResponseRedirect(f'http://localhost:80/activate/{uid}/{token}')
+        return HttpResponseRedirect(f'http://89.111.137.192:80/activate/{uid}/{token}')
 
 
 class ActivationView(UserViewSet):

@@ -43,7 +43,7 @@ export default function Login(){
         event.preventDefault();
         console.log("getToken")
 
-        const tokenResponse = await axios.post('http://127.0.0.1/api/api/token/', {
+        const tokenResponse = await axios.post('http://89.111.137.192/api/api/token/', {
             username: email,
             password: password
         });

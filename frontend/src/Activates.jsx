@@ -14,10 +14,13 @@ export default function Activates(){
     useEffect(() => {
         const activateUser = async () => {
             try {
-                const response = await fetch('http://127.0.0.1/api/api/v1/accounts/activation/', {
+                
+                const response = await fetch('http://89.111.137.192/api/api/v1/accounts/activation/', {
                     method: 'POST',
+                    withCredentials: true,
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
                     },
                     body: JSON.stringify({ uid, token }) // Отправляем uid и token
                 });
