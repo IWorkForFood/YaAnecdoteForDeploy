@@ -7,6 +7,8 @@ import './zero_styles.css'
 import Navbar from './Navbar'
 import './Content.css'
 import CategoryTitle from './CategoryTitle'
+import AdaptiveHeader from './AdaptiveHeader'
+import { doLikedCollectionReceiving } from './hooks/CollectionApi'
 
 export default function Profile(){
 
@@ -14,6 +16,7 @@ export default function Profile(){
 
     const [sign, setSign] = useState('profile');
     const [userData, setUserData] = useState('profile');
+    const [likedCount, setLikedCount] = useState()
 
     const getUserData = async function(){
         api.get('/auth/v1/users/me/').then(response => {setUserData(response.data).catch(error=>console.log(error));
@@ -21,13 +24,29 @@ export default function Profile(){
     }
     
     useEffect(() => {
-        getUserData()
+        const fetchData = async () => {
+            try {
+                await getUserData(); 
+                const likedData = await doLikedCollectionReceiving(); 
+                console.log(likedData)
+                setLikedCount(likedData.tracks.length);
+            } catch (error) {
+                console.error("Ошибка при загрузке данных:", error);
+            }
+        };
+
+    fetchData();
     }, [])
 
+
+
     return(
+
+    
     <div className="page-container">
-        {<Navbar setSign={setSign} sign={sign} />}
+        <Navbar setSign={setSign} sign={sign} />
         <div className='content'>
+            <AdaptiveHeader></AdaptiveHeader>
             
             <div className='Profile'>
             <ProfileContainer>
@@ -45,15 +64,25 @@ export default function Profile(){
             <ProfileContainer>Привет</ProfileContainer>
             
             <CategoryTitle style={{ marginTop: '1rem'}}>Прослушано анекдотов</CategoryTitle>
-            <div className='period-stat-container profile-stat-row' >
-                <ProfileContainer>Привет</ProfileContainer>
-                <span className='period-stat-container__blank-separator'></span>
-                <ProfileContainer>Привет</ProfileContainer>
-                <span className='period-stat-container__blank-separator'></span>
-                <ProfileContainer>Привет</ProfileContainer>
+            <div className='period-stat-container profile-stat-row container-fluid p-0' >
+                <div className="row g-2" style ={{width: '100%'}}>
+                    <div className="col-sm-4 col-12">
+                        <ProfileContainer title='Любимых анеков'>{likedCount}</ProfileContainer>
+                    </div >
+                    
+                    <div className="col-sm-4 col-12">
+                        <ProfileContainer>{likedCount}</ProfileContainer>
+                    </div>
+
+                    <div className="col-sm-4 col-12">
+                        <ProfileContainer>{likedCount}</ProfileContainer>
+                    </div>
+                </div>
+                
             </div>
             </div>
         </div>
     </div>
+
     )
 }

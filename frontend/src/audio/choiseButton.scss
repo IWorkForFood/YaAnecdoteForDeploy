@@ -4,12 +4,13 @@
 
 .choise-button{
     margin-left: auto;
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     padding: 0;
-    border: 0;
+    border: solid 1px $mainYellow;
     border-radius: 50%;
-    background-color: aqua;
+    background-color: $barColor;
+
 }
 .choise{
     position: absolute;

@@ -1,5 +1,5 @@
 .carousel{
-    height: 600px;
+    height: 374px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -17,6 +17,36 @@
 }
 .arrow{
     background-color: black;
+    color: #fff;
+    cursor: pointer;
+}
+
+.carousel{
+    height: 370px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.window{
+    overflow: hidden;
+    height: 300px;
+    width: 100%;
+}
+
+.all-pages-container{
+    height: 100%;
+    display: flex;
+}
+.arrows {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 100%;
+}
+.arrow{
+    background-color: rgba(0,0,0,0);
     color: #fff;
     cursor: pointer;
 }

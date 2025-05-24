@@ -62,7 +62,7 @@ export default function Login(){
         
 
     return(
-        <div>
+        <div className='reg-enter-wrapper'>
         <div className = "reg-enter-block">
         <h2 id='reg-title'>Вход</h2>
         <p className = "form-left-line" >Добро пожаловать! Мы рады видеть вас снова!</p>
@@ -70,7 +70,7 @@ export default function Login(){
             {/*<input name='email' placeholder='email' value={email} onChange={handleEmailChange}></input>
             <input name='password' placeholder='Пароль' value={password} onChange={handlePasswordChange}></input>*/}
 
-            <div className="input-group mb-3">
+            <div className="mb-3">
             <input
                 type="text"
                 className="form-control"

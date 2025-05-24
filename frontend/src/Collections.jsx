@@ -58,7 +58,7 @@ const CollectionSlide = function(){
     return(
         <div className="collections-container">
             <div className="button-wrapper">
-                <ChooseButton isActive={chosenButton=='playlists'} onClick={() => makeChosen("playlists")}>Плейлисты</ChooseButton>
+                <ChooseButton isActive={chosenButton=='playlists'} onClick={() => makeChosen("playlists") }>Плейлисты</ChooseButton>
                 <span className='button-wrapper__separator' style={{width: '20px'}}></span>
                 <ChooseButton isActive={chosenButton=='collections'} onClick={() => makeChosen("collections")}>Коллекции</ChooseButton>
             </div>
@@ -74,7 +74,7 @@ const CollectionSlide = function(){
                       }
                       console.log(albumInfo)
                     return(
-                        <Link to="/tracks_list" className='slide-container__collection-cover' style={
+                        <Link to="/tracks_list" className='slide-container__collection-cover col-xs-12' style={
                             { background: `url(${collection.cover}) 50% 50%/cover no-repeat`,
                                 display: 'inline-block',
                                 padding: '117px 106px',
@@ -91,7 +91,7 @@ const CollectionSlide = function(){
                     <Link to='/favourite_tracks' className='slide-container__favorite'>
                         <span>Любимые</span>
                     </Link>
-                    <div className='slide-container__addplaylist' onClick={async () => {
+                    <div className='slide-container__addplaylist col-xs-12' onClick={async () => {
                             try {
                             
                             const playlistData = await doPlayListCreation();

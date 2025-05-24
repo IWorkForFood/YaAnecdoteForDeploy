@@ -78,6 +78,7 @@ export default function MisicBar() {
         getPlaylists()
         getReorderedTracks().then(data => setReorderedTracks(data));
     }, [])
+    
 
     
     const toggleLike = (trackId, endpoint) => {
@@ -165,7 +166,12 @@ export default function MisicBar() {
                                                 <button
                                                     className={`top-track-list__reaction-button like-button
                                                         ${activeLikes[track.id] ? 'active' : ''}`}
-                                                    onClick={() => toggleLike(track.id, '/v1/music/track/')}
+                                                    onClick={
+                                                        (e) => {
+                                                            toggleLike(track.id, '/v1/music/track/')
+                                                            e.stopPropagation()
+                                                        }
+                                                    }
                                                 >
                                                 <i class={`bi bi-heart${activeLikes[track.id] ? "-fill" : ""} like-button__like-heart`} width="24" height="24" style={{color:'rgb(255, 217, 0)'}}></i>
                                                 
@@ -237,23 +243,6 @@ export default function MisicBar() {
                     </div>
                 </div>
                 
-                <div className='col-12'>
-                    <Carousel>
-                        <Carousel.Page>
-                            <div className='item item-1' style={{backgroundColor: 'red', width: '100%', height: '100%'}}>item1</div>
-                        </Carousel.Page>
-                        
-                        <Carousel.Page>
-                            <div className='item' style={{backgroundColor: 'green', width: '100%', height: '100%'}}>item2</div>
-                        </Carousel.Page>
-
-                        <Carousel.Page>
-                            <div className='item' style={{backgroundColor: 'blue', width: '100%', height: '100%'}}>item3</div>
-                        </Carousel.Page>
-                        
-                        
-                    </Carousel>
-                </div>
                 <div className = "collection-list">
                     
                 </div>

@@ -78,9 +78,7 @@ export default function Carousel({ children }) {
             
         >
 
-            <button className='arrow' onClick={handleLeftArrowClick}>
-                <i class="bi bi-caret-left-fill"></i>
-            </button>
+            
             <div className="window" ref={windowElementRef}>
                 
                 <div className="all-pages-container"
@@ -92,10 +90,18 @@ export default function Carousel({ children }) {
                 </div>
 
             </div>
+            <div className='arrows'>
 
-            <button className='arrow' onClick={handleRightArrowClick}>
-                <i class="bi bi-caret-right-fill"></i>
-            </button>
+                <button className='arrow' onClick={handleLeftArrowClick}>
+                    <i class="bi bi-caret-left-fill"></i>
+                </button>
+
+                <button className='arrow' onClick={handleRightArrowClick}>
+                    <i class="bi bi-caret-right-fill"></i>
+                </button>
+
+            </div>
+            
         </div>
         </CarouselContext.Provider>
     )

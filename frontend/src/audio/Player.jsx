@@ -91,15 +91,19 @@ export default function Player() {
 
         <div className="player-adding">
         <button className="choise-button" onClick={() => setOpen(!isOpen)} style={{display: "inline-block"}}>
+          <i class="bi bi-plus"></i>
         </button>
 
         <nav className={`choise ${isOpen ? "active" : ""}`} ref={menuRef}>
           <ul className="choise__list ">
             {playlists && Object.values(playlists).map((playlist) => {
-              console.log("playlists", playlists)
+              console.log("playlist -s", playlist)
+              console.log("playlists us of likes", playlist.track_ids)
+              const userLikes = playlist.track_ids || []
+              const isSelected = userLikes.some(item => item === currentTrack.id);
               return(
                 <li 
-                className="choise__item"
+                className={`choise__item ${isSelected ? "selected" : ""}`}
                  onClick={() => addCurrentTrackToPlaylist(playlist)}
                  key={playlist.id}
                 >

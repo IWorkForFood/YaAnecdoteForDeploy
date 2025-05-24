@@ -13,6 +13,7 @@
     position: relative;
     margin-right: 10px;
     box-shadow: inset 0px -30px 50px #000;
+    margin-bottom: 10px;
 }
 .slide-container__addplaylist{
     border: 1px solid rgb(255, 217, 0);
@@ -23,6 +24,7 @@
     position: relative;
     margin-right: 10px;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 .slide-container__favorite span{
     position: absolute;
@@ -37,4 +39,28 @@
     transform: translateX(-50%);
     transform: translateY(-50%);
     font-size: 1.5rem;
+}
+.slide-container__collection-cover {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+
+@media (max-width: 330px) { /* sm и больше */
+  .slide-container__collection-cover {
+    width: 100%; /* Можно и в процентах */
+  }
+  .slide-container__favorite{
+    width: 100%;
+  }
+  .slide-container__addplaylist{
+    width: 100%;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .button-wrapper{
+    display: flex;
+  }
 }

@@ -10,7 +10,6 @@ import { usePlayer } from './audio/PlayerContext';
 import TrackBar from './audio/TrackBar';
 
 
-
 export default function Playlist({ albumId }) {
     const [albumInfo, setAlbumInfo] = useState(null);
     const [trackList, setTrackList] = useState([]);
@@ -19,6 +18,7 @@ export default function Playlist({ albumId }) {
     const [imgFile, setImgFile] = useState(null);
     const [editMode, setEditMode] = useState({ img: false, title: false, description: false });
     const [titleInputValue, setTitleInputValue] = useState()
+    
     const { setPlaylist, setTrack } = usePlayer();
 
     const navigate = useNavigate();

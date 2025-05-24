@@ -2,6 +2,7 @@ import './registration.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { getCookie } from 'react-use-cookie';
 
 export default function Registration() {
   const [username, setName] = useState('');
@@ -111,9 +112,6 @@ export default function Registration() {
     if (hasErrors) return; // Не отправляем запрос, если есть ошибки
 
     try {
-      await axios.get('http://localhost:8000/api/auth/csrf/', {
-        withCredentials: true
-      });
       // 1. Отправляем данные на сервер для регистрации
       const regResponse = await axios.post('http://127.0.0.1/api/api/auth/v1/users/', {
         email: email,
@@ -148,7 +146,7 @@ export default function Registration() {
   }
 
   return (
-    <div>
+    <div className='reg-enter-wrapper'>
       <div className="reg-enter-block">
         <h2 id="reg-title">Регистрация</h2>
         <p className="form-left-line">Добро пожаловать! Мы рады видеть вас снова!</p>
@@ -182,6 +180,7 @@ export default function Registration() {
               placeholder="email"
               style={{
                 border: hasError.email.length > 0 ? '1px solid red' : null,
+                color: 'red'
               }}
               required
             />
@@ -202,6 +201,7 @@ export default function Registration() {
               placeholder="Пароль"
               style={{
                 border: hasError.password.length > 0 ? '1px solid red' : null,
+                color: 'red'
               }}
               required
             />
@@ -216,6 +216,7 @@ export default function Registration() {
             Зарегистрироваться
           </button>
         </form>
+        
       </div>
       {message && (
         <p style={{ color: message.includes('успешна') ? 'green' : 'red', marginTop: '10px' }}>
@@ -225,6 +226,7 @@ export default function Registration() {
       <p>
         Already a member? <span><Link to="/login">Sign In</Link></span>
       </p>
+      
     </div>
   );
 }

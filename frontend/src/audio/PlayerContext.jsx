@@ -13,6 +13,32 @@ export function PlayerProvider({ children }) {
   const progressRef = useRef(null);
 
 
+  //-- Для статистики
+
+  const sendListeningData = async (track, startTime, endTime) => {
+    try {
+      const duration = Math.floor((endTime - startTime) / 1000); // в секундах
+      
+      await api.post('/listening-history/', {
+        track_id: track.id,
+        start_time: new Date(startTime).toISOString(),
+        end_time: new Date(endTime).toISOString(),
+        duration_seconds: duration
+      });
+      
+      console.log('Listening data saved successfully');
+    } catch (error) {
+      console.error('Error saving listening history:', error);
+      
+      // Дополнительная обработка ошибок
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        console.error('Status code:', error.response.status);
+      }
+    }
+  };
+
+
   //---Для обновления списка добавляемых треков
 
   useEffect(() => {

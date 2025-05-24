@@ -19,9 +19,6 @@
     font-size: 70px;
     cursor: pointer; 
 }
-.top-track-conteiner{
-    padding-left: 12px;
-}
 
 .top-track-list{
     width: 100%;
@@ -103,4 +100,10 @@
 
 .item-1{
     background-color: aqua;
+}
+
+@media(max-width: 330px){
+    .choose-button{
+        width: 45%;
+    }
 }
