@@ -1,12 +1,14 @@
 from rest_framework import generics, parsers, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from core.apps.music.models import Track, AuthorsCollection, UsersCollection, Author
+from core.apps.music.models import Track, AuthorsCollection, UsersCollection, Author, ListeningHistory
 from .serializers import (TrackSerializer,
                            AuthorsCollectionSerializer,
                              UsersCollectionSerializer,
                              AuthorSerializer,
-                             CreateAuthorsCollectionSerializer)
+                             CreateAuthorsCollectionSerializer,
+                             ListeningHistorySerializer)
+from django.db import models
 from rest_framework.permissions import IsAuthenticated
 from .services import delete_old_file
 import os
@@ -263,6 +265,30 @@ def get_reordered_tracks(request):
         )
         return Response({'tracks': serialized_data.data})
     
+    
+class ListeningHistoryViewSet(viewsets.ModelViewSet):
+    serializer_class = ListeningHistorySerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return ListeningHistory.objects.filter(user=self.request.user)
+    
+    def perform_create(self, serializer):
+        track_id = serializer.validated_data['track'].id
+        track = Track.objects.get(id=track_id)
+        
+        duration = serializer.validated_data['duration_seconds']
+        track_duration = track.duration_seconds  # Предполагаем, что есть способ получить длительность
+        is_completed = duration >= (track_duration * 0.9)
+        
+        serializer.save(
+            user=self.request.user,
+            is_completed=is_completed
+        )
+        
+        if is_completed:
+            track.times_played = models.F('times_played') + 1
+            track.save()
 
 
 

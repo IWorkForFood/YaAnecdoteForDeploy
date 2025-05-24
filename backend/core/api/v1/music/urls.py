@@ -1,5 +1,7 @@
 from django.urls import path
-from .handlers import (TrackView, AuthorsCollectionView, UsersCollectionView, AuthorsView, like_tracks_list, favourite_tracks, get_reordered_tracks)
+from .handlers import (TrackView, AuthorsCollectionView, UsersCollectionView, AuthorsView, 
+                       like_tracks_list, favourite_tracks, get_reordered_tracks,
+                       ListeningHistoryViewSet)
 
 
 urlpatterns = [
@@ -12,6 +14,6 @@ urlpatterns = [
     path("author/", AuthorsView.as_view({"get":"list"}), name="get_authors"),
     path("liked_authors_collections/", like_tracks_list, name="like_a_collections"),
     path("favourite_tracks/", favourite_tracks, name="favourite_tracks"),
-    path("reordered_tracks/", get_reordered_tracks, name="reordered_tracks")
-
+    path("reordered_tracks/", get_reordered_tracks, name="reordered_tracks"),
+    path("listening-history/", ListeningHistoryViewSet.as_view({"post":"create", "get":"list"}), name="statistic")
 ]

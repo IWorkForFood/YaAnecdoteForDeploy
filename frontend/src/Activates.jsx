@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useState, useEffect } from 'react';
 import { useParams, Link, Outlet } from 'react-router-dom';
+import './Activates.css'
 
 export default function Activates(){
 
@@ -36,10 +37,12 @@ export default function Activates(){
     
 
     return (
-        <div>
-            <h2 style={{backgroundColor:"red"}}>Активация аккаунта</h2>
-                <Link to="/login">ВОЙТИ</Link>
-            <p>{message}</p>
+        <div className="activates-body">
+            <div className="activates-functional-block">
+                <h2>Активация аккаунта</h2>
+                <span className="message-span">{message}</span>
+                <Link to="/login" className="activation-enter">ВОЙТИ</Link>
+            </div>
         </div>
     );
 };

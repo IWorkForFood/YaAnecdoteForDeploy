@@ -69,16 +69,21 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+CORS_ALLOW_CREDENTIALS = True #  Разрешает отправку учетных данных (куки, авторизационные заголовки, сертификаты) в кросс-доменных запросах.
+CORS_ORIGIN_ALLOW_ALL = False #  Запрещает автоматически разрешать все источники (*) для CORS.
+
+
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5177",
+    "http://localhost",
     "http://localhost:5175",
     "http://localhost:5174",
     "http://localhost",
     "http://30.30.20.20", # For React
     "http://localhost:3000",
     "http://backend",
-    "http://frontend"
+    "http://frontend",
+    "http://127.0.0.1",
     
 ]
 
@@ -204,7 +209,7 @@ DJOSER = {
     "PASSWORD_RESET_CONFIRM_URL": "email/reset/confirm/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": True,
     "SOCIAL_AUTH_TOKEN_STRATEGY": "djoser.social.token.jwt.TokenStrategy",
-    "ACTIVATION_URL": "api/v1/accounts/activate/{uid}/{token}",
+    "ACTIVATION_URL": "api/api/v1/accounts/activate/{uid}/{token}",
 }
 
 #SMTP

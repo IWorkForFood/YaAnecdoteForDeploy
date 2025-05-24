@@ -1,9 +1,13 @@
 from django.db import models
 
 from django.db import models
+from django.utils import timezone
 from datetime import datetime
 from django.contrib.auth import get_user_model
+from mutagen.mp3 import MP3
 import uuid
+
+import os
 
 def track_audio_files_directory_path(instance, filename):
     now = datetime.now().strftime('%Y/%m/%d/%H/%M/%S')
@@ -38,6 +42,21 @@ class Track(models.Model):
     users_collection = models.ManyToManyField('UsersCollection', blank = True, related_name="u_collection")
     user_of_likes = models.ManyToManyField(get_user_model(), related_name='likes_of_tracks', blank = True, null=True)
 
+    duration_seconds = models.PositiveIntegerField(default=0, verbose_name="Длительность (сек)")
+    
+    def save(self, *args, **kwargs):
+        if not self.duration_seconds and self.audio_file:
+            try:
+                # Полный путь к файлу
+                file_path = self.audio_file.path
+                if os.path.exists(file_path):
+                    audio = MP3(file_path)
+                    self.duration_seconds = int(audio.info.length)
+            except Exception as e:
+                print(f"Error calculating duration: {e}")
+                self.duration_seconds = 0
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f'{self.author} - {self.title} - {self.pk}'
 
@@ -61,6 +80,31 @@ class UsersCollection(models.Model):
         return f'{self.user} - {self.title} - {self.pk}'
 
 
+class ListeningHistory(models.Model):
+    user = models.ForeignKey(
+        get_user_model(), 
+        on_delete=models.CASCADE,
+        related_name='listening_history'
+    )
+    track = models.ForeignKey(
+        'Track',
+        on_delete=models.CASCADE,
+        related_name='play_history'
+    )
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    duration_seconds = models.PositiveIntegerField()
+    date = models.DateField(default=timezone.now)
+    is_completed = models.BooleanField(default=False)  # Прослушан ли трек полностью
+    
+    class Meta:
+        verbose_name_plural = "Listening Histories"
+        indexes = [
+            models.Index(fields=['user', 'date']),
+            models.Index(fields=['track']),
+            models.Index(fields=['is_completed']),
+        ]
+        ordering = ['-start_time']
 
 
 

@@ -19,6 +19,7 @@ drf-yasg = "^1.21.9"
 social-auth-app-django = "^5.4.3"
 pillow = "^11.1.0"
 django-cors-headers = "^4.7.0"
+mutagen = "^1.47.0"
 
 
 [build-system]

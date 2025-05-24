@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from core.apps.music.models import Track, AuthorsCollection, UsersCollection, Author
+from core.apps.music.models import Track, AuthorsCollection, UsersCollection, Author, ListeningHistory
 from .services import delete_old_file
 from django.contrib.auth import get_user_model
-
+from django.utils import timezone
 
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -83,3 +83,22 @@ class UsersCollectionSerializer(serializers.ModelSerializer):
             delete_old_file(instance.cover.path)
         return super().update(instance, validated_data)
 
+class ListeningHistorySerializer(serializers.ModelSerializer):
+    date = serializers.DateField(default=timezone.now().date())
+    class Meta:
+        model = ListeningHistory
+        fields = [
+            'id',
+            'track',
+            'start_time',
+            'end_time',
+            'duration_seconds',
+            'date',
+            'is_completed'
+        ]
+        read_only_fields = ['user', 'date']
+    
+    def validate(self, data):
+        if data['end_time'] <= data['start_time']:
+            raise serializers.ValidationError("End time must be after start time")
+        return data
