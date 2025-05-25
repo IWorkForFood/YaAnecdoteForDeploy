@@ -124,7 +124,6 @@ export default function Profile(){
             console.log("History:", history);
             setStats(getListeningStats(history))
             console.log(getListeningStats(history))
-            console.log(stats);
         } )
         .catch(error => console.log(error));
     }, [])
@@ -178,15 +177,15 @@ export default function Profile(){
             <div className='period-stat-container profile-stat-row container-fluid p-0' >
                 <div className="row g-2" style ={{width: '100%'}}>
                     <div className="col-sm-4 col-12">
-                        <ProfileContainer title='За день'>{stats ? `${stats.daily[currentDates.day].totalDuration} сек` : "..."}</ProfileContainer>
+                        <ProfileContainer title='За день'>{stats ? `${currentDates.day in stats.daily ? stats.daily[currentDates.day].totalDuration : ""} сек` : "..."}</ProfileContainer>
                     </div >
                     
                     <div className="col-sm-4 col-12">
-                        <ProfileContainer title='За месяц'>{stats ? `${stats.monthly[currentDates.month].totalDuration} сек` : "..."} </ProfileContainer>
+                        <ProfileContainer title='За месяц'>{stats ? `${currentDates.month in stats.monthly ? stats.monthly[currentDates.month].totalDuration : ""} сек` : "..."} </ProfileContainer>
                     </div>
 
                     <div className="col-sm-4 col-12">
-                        <ProfileContainer title='За год'>{ stats ? `${stats.yearly[currentDates.year].totalDuration} сек` : "..."}</ProfileContainer>
+                        <ProfileContainer title='За год'>{stats ? `${currentDates.year in stats.yearly ? stats.yearly[currentDates.year].totalDuration : ""} сек` : "..."}</ProfileContainer>
                     </div>
                 </div>
                 
