@@ -9,7 +9,7 @@ import './Content.css'
 import CategoryTitle from './CategoryTitle'
 import AdaptiveHeader from './AdaptiveHeader'
 import { doLikedCollectionReceiving } from './hooks/CollectionApi'
-import ListeningChart from './chart/chart'
+//import ListeningChart from './chart/chart'
 
 
 function getListeningStats(history) {
@@ -168,10 +168,13 @@ export default function Profile(){
                 
                 </div>
             </ProfileContainer>
+{/*
             <CategoryTitle style={{ marginTop: '1rem'}}>Статистика</CategoryTitle>
+            
             <ProfileContainer>
               {listenHistory && <ListeningChart history={listenHistory} />}
             </ProfileContainer>
+*/}
             
             <CategoryTitle style={{ marginTop: '1rem'}}>Прослушано анекдотов</CategoryTitle>
             <div className='period-stat-container profile-stat-row container-fluid p-0' >
