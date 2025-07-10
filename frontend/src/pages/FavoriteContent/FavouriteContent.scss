@@ -1,0 +1,105 @@
+@import '../../mainVars';
+
+.image-block {
+  flex: 1 1 200px;
+  img{
+    @include defaultShadow;
+  }
+}
+
+.track-representation {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex: 1;
+}
+
+.track-description {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  padding-left: 14px;
+  color: #fff;
+
+  div {
+    text-align: center;
+
+    &:last-child {
+      color: $mainYellow;
+    }
+  }
+
+  p {
+    margin: 0px;
+  }
+}
+
+.track-list-album-title {
+  //шаблон
+  @extend %blueTitle;
+}
+
+.like-track-list-button {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  background-color: rgba(0, 0, 0, 0);
+  text-decoration: none;
+}
+
+.track-info {
+  height: 56px;
+  background-color: $barColor;
+  padding: 17px;
+  border-radius: 20px;
+  margin: 12px 0;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  //миксин
+  @include defaultShadow;
+}
+
+.track-item {
+  display: flex;
+}
+
+.image-button-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 75px;
+}
+
+.button-toolbar {
+  .btn {
+    margin-right: 10px;
+    @include defaultShadow;
+  }
+}
+
+.back-button-container {
+  text-align: center;
+}
+
+.like-icon {
+  filter: invert(1) sepia(1) saturate(5) hue-rotate(180deg);
+}
+
+.content-block {
+  display: flex;
+  justify-content: end;
+  flex-direction: column;
+  align-items: start;
+}
+
+.no-tracks {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}

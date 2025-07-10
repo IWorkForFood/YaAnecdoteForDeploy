@@ -2,22 +2,21 @@ import '../css/App.css'
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './shared/api/components/ProtectedRoute';
 
-import Registration from './registration/Registration'
-import Home from './Home'
-import Login from './login/Login'
-import Activates from './Activates'
-import CollectPage from './CollectPage'
-import Profile from './Profile'
-import TrackList from './TrackList'
-import PlayListPage from './PlaylistPage'
-import AudioTracks from './audio/AudioMusic';
-import FavouriteTracks from './FavouriteTracks';
-import TrackBar from './audio/TrackBar';
-import { PlayerProvider } from "./audio/PlayerContext";
-import Player from "./audio/Player";
-import PlaylistPag from "./TestPlayer"
+import Registration from './pages/registration/Registration'
+import Home from './pages/Home/Home'
+import Login from './pages/login/Login'
+import Activates from './pages/ActivationPage/Activates'
+import CollectPage from './pages/CollectionsPage/CollectPage'
+import Profile from './pages/Profile/Profile'
+import TrackList from './pages/ListContent/TrackList'
+import PlayListPage from './pages/PlaylistPage/PlaylistPage'
+import AudioTracks from './widgets/audio/model/ReactAudioMusic';
+import FavouriteTracks from './pages/FavoriteContent/FavouriteTracks';
+import TrackBar from './widgets/audio/ui/TrackBar';
+import { PlayerProvider } from "./widgets/audio/model/PlayerContext";
+import Player from "./widgets/audio/ui/Player";
 
 function App() {
 
@@ -36,7 +35,6 @@ function App() {
             <Route path='/tracks_list/' element={<TrackList />} />
             <Route path='/playlist_page/:id' element={<PlayListPage />} />
             <Route path='/audio' element={ <AudioTracks />} />
-            <Route path='/bff/:id' element={<PlaylistPag />} />
           </Route>
           <Route path='/reg' element={<Registration />} />
           <Route path='/activate/:uid/:token' element={<Activates />} />
