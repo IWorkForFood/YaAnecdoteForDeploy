@@ -10,6 +10,7 @@ const AudioTracks = ({ getCollection }) => {
       const data = await getCollection();
       const prepared = await Promise.all(
         data.tracks.map(async (track) => {
+          console.log('id - ', track.id)
           const audio = new Audio(track.audio_file);
           await new Promise(resolve => {
             audio.addEventListener("loadeddata", resolve);
@@ -21,11 +22,13 @@ const AudioTracks = ({ getCollection }) => {
         })
       );
       setPlaylist(prepared);
+      
 
     };
 
     load();
   }, [getCollection]);
+  
 
   return null; // отображение по желанию
 };

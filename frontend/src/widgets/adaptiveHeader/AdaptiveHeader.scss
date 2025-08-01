@@ -1,3 +1,14 @@
 .adaptive-header{
     background-color: #1D2123;
 }
+
+.basic-header{
+    height: 70px;
+    background-color: transparent;
+}
+
+@media(max-width: 768px){
+    .basic-header{
+        display: none;
+    }
+}

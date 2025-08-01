@@ -4,9 +4,9 @@ api.defaults.headers['Content-Type'] = 'multipart/form-data'
 
 const getLikedUsers = async function(track_id, endpoint){
     try {
-        console.log(`endpoint: ${endpoint}${track_id}`)
+        //console.log(`endpoint: ${endpoint}${track_id}`)
         const response = await api.get(`${endpoint}${track_id}`);
-        console.log(response.data.user_of_likes)
+        //console.log(response.data.user_of_likes)
         return response.data.user_of_likes; // предполагаем, что это массив
     } catch (error) {
         console.error('Ошибка при получении лайков:', error);
@@ -16,22 +16,22 @@ const getLikedUsers = async function(track_id, endpoint){
 
 const makePatchRequest = async function(track_id, new_user = null, deleted_user = null, endpoint) {
     let liked_users = await getLikedUsers(track_id, endpoint); // теперь мы дожидаемся массив
-    console.log('check:', !Array.isArray(liked_users), liked_users)
+    //console.log('check:', !Array.isArray(liked_users), liked_users)
     if (liked_users == null) {
         console.error('liked_users не массив:', liked_users);
         return;
     }
-    console.log('new_user:', new_user)
+    //console.log('new_user:', new_user)
     if (new_user) {
         liked_users.push(new_user);
-        console.log('like', liked_users)
+        //console.log('like', liked_users)
     } else if (deleted_user) {
         let index = liked_users.indexOf(deleted_user);
-        console.log('dislike', liked_users)
+        //console.log('dislike', liked_users)
         if (index !== -1) liked_users.splice(index, 1);
     }
 
-    console.log('Обновлённый список лайков:', liked_users);
+    //console.log('Обновлённый список лайков:', liked_users);
 
 
 
@@ -41,9 +41,9 @@ const makePatchRequest = async function(track_id, new_user = null, deleted_user 
             formData.append('user_of_likes', Number(user));
         });
         try {
-            console.log('r', `${endpoint}${track_id}`)
+           // console.log('r', `${endpoint}${track_id}`)
             const response = await api.patch(`${endpoint}${track_id}`, formData);
-            console.log('Обновление успешно:', response);
+            //console.log('Обновление успешно:', response);
         }catch (error) {
             console.error('Ошибка при отправке лайков:', error);
         }

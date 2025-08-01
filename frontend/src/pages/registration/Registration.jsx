@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { getCookie } from 'react-use-cookie';
+import { BACKEND_DOMAIN } from '../../shared/config/names'
 
 export default function Registration() {
   const [username, setName] = useState('');
@@ -113,7 +114,7 @@ export default function Registration() {
 
     try {
       // 1. Отправляем данные на сервер для регистрации
-      const regResponse = await axios.post('http://127.0.0.1/api/api/auth/v1/users/', {
+      const regResponse = await axios.post(BACKEND_DOMAIN + 'api/auth/v1/users/', {
         email: email,
         username: username,
         password: password,
@@ -127,7 +128,7 @@ export default function Registration() {
       }
     );
 
-      console.log('Успешная регистрация:', regResponse.data);
+      //console.log('Успешная регистрация:', regResponse.data);
 
       setMessage('Регистрация успешна! Подтвердите email по ссылке в письме.');
       // Очищаем форму

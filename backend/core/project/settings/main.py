@@ -17,113 +17,108 @@ import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 env = environ.Env()
-environ.Env.read_env( BASE_DIR / '.env' )
+environ.Env.read_env(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('DJANGO_SECRET_KEY', default='mysecretkey')
+SECRET_KEY = env("DJANGO_SECRET_KEY", default="mysecretkey")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['backend', 'localhost', '30.30.20.20', "127.0.0.1"]
+ALLOWED_HOSTS = ["backend", "localhost", "30.30.20.20", "127.0.0.1"]
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
     # project apps
-
     #'core.apps.products',
     "core.apps.accounts",
     "core.apps.music",
-
     # third party apps
-
-    'rest_framework',
-    'djoser',
-    'drf_yasg',
-    'social_django',
-    'corsheaders',
+    "rest_framework",
+    "djoser",
+    "drf_yasg",
+    "social_django",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    #additional headers
-
-    'corsheaders.middleware.CorsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # additional headers
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
-CORS_ALLOW_CREDENTIALS = True #  Разрешает отправку учетных данных (куки, авторизационные заголовки, сертификаты) в кросс-доменных запросах.
-CORS_ORIGIN_ALLOW_ALL = False #  Запрещает автоматически разрешать все источники (*) для CORS.
-
+CORS_ALLOW_CREDENTIALS = True  #  Разрешает отправку учетных данных (куки, авторизационные заголовки, сертификаты) в кросс-доменных запросах.
+CORS_ORIGIN_ALLOW_ALL = (
+    False  #  Запрещает автоматически разрешать все источники (*) для CORS.
+)
 
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost",
     "http://localhost:5175",
+    "http://localhost:5173",
     "http://localhost:5174",
     "http://localhost",
-    "http://30.30.20.20", # For React
+    "http://30.30.20.20",  # For React
     "http://localhost:3000",
     "http://backend",
     "http://frontend",
     "http://127.0.0.1",
-    
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:3000',  # React dev server
+    "http://localhost:3000",  # React dev server
 ]
 
 
-ROOT_URLCONF = 'core.project.urls'
+ROOT_URLCONF = "core.project.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'core.project.wsgi.application'
+WSGI_APPLICATION = "core.project.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('POSTGRES_DB'),  # Имя БД
-        'USER': env('POSTGRES_USER'),       # Пользователь
-        'PASSWORD': env('POSTGRES_PASSWORD'),  # Пароль
-        'HOST': env('POSTGRES_HOST'),    # Если БД локально, иначе IP или имя контейнера
-        'PORT': env('POSTGRES_PORT'),         # Порт PostgreSQL
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("POSTGRES_DB"),  # Имя БД
+        "USER": env("POSTGRES_USER"),  # Пользователь
+        "PASSWORD": env("POSTGRES_PASSWORD"),  # Пароль
+        "HOST": env("POSTGRES_HOST"),  # Если БД локально, иначе IP или имя контейнера
+        "PORT": env("POSTGRES_PORT"),  # Порт PostgreSQL
     }
 }
 
@@ -133,10 +128,10 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -144,9 +139,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = "ru"
 
-TIME_ZONE = 'Europe/Moscow'
+TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
 
@@ -156,53 +151,53 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "static"
 
 
-MEDIA_ROOT = '/app/media/'
-MEDIA_URL = '/media/'
+MEDIA_ROOT = "/app/media/"
+MEDIA_URL = "/media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Custom Model
 
-AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = "accounts.CustomUser"
 
 # rest_framework
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
     ],
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser'
+    "DEFAULT_PARSER_CLASSES": ["rest_framework.parsers.JSONParser"],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication'
-    ]
 }
 
 # For google authentication
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "78264830961-n1g3eeuoarubqljufddtj6ho2fvq6dq8.apps.googleusercontent.com"
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = (
+    "78264830961-n1g3eeuoarubqljufddtj6ho2fvq6dq8.apps.googleusercontent.com"
+)
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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"
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ["email", "profile"]
 
 # Djoser`s settings`
-FRONTEND_URL = '30.30.20.20'
+FRONTEND_URL = "30.30.20.20"
 
 DJOSER = {
     "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
     "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
-    'DOMAIN': FRONTEND_URL,
-    #email
+    "DOMAIN": FRONTEND_URL,
+    # email
     "SEND_CONFIRMATION_EMAIL": True,
-    "EMAIL_FRONTEND_SITE_NAME": 'YaAnecdote',
+    "EMAIL_FRONTEND_SITE_NAME": "YaAnecdote",
     "SET_USERNAME_RETYPE": True,
     "SET_PASSWORD_RETYPE": True,
     "USERNAME_RESET_CONFIRM_URL": "password/reset/confirm/{uid}/{token}",
@@ -212,7 +207,7 @@ DJOSER = {
     "ACTIVATION_URL": "api/api/v1/accounts/activate/{uid}/{token}",
 }
 
-#SMTP
+# SMTP
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
@@ -221,6 +216,3 @@ EMAIL_HOST_USER = "newsprojectsendler@gmail.com"
 EMAIL_HOST_PASSWORD = "dpeuugjuehetngin"
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "Celery <newsprojectsendler@gmail.com>"
-
-
-

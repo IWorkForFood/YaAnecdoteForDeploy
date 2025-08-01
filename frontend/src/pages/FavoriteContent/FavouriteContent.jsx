@@ -32,7 +32,7 @@ export default function ListContent() {
   }, []);
 
   useEffect(() => {
-    console.log("Updated tracks:", tracks);
+    //console.log("Updated tracks:", tracks);
     //setTrackCount(tracks.length)
   }, [tracks]);
 

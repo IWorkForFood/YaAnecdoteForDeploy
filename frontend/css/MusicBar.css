@@ -8,14 +8,34 @@
 }
 
 .main-track-img {
-  background-color: aqua;
+  background-color: #609EAF;
   height: 373px;
   border-radius: 40px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  padding: 0 16px;
   font-size: 60px;
   transition: font-size 1s;
+  position: relative;
+  overflow: hidden;
+}
+.main-track-img:before {
+  content: "";
+  position: absolute;
+  inset: -30px;
+  background: url("/random-img-background.svg") right center/cover;
+}
+.main-track-img__text {
+  font-size: 40px;
+}
+@media (max-width: 768px) {
+  .main-track-img {
+    font-size: 40px;
+  }
+  .main-track-img__text {
+    font-size: 20px;
+  }
 }
 
 .main-track-img:hover {

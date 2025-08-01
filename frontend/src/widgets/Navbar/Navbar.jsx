@@ -2,34 +2,6 @@ import './Navbar.css'
 import { Link } from 'react-router-dom';
 import { handleLogout } from '../../pages/login/Logout'
 
-const menuItems = [
-    {
-      icons: <img src='/homepage_active_active.png'></img>,
-      label: 'Home'
-    },
-    {
-      //icons: <FaProductHunt size={30} />,
-      label: 'Products'
-    },
-    {
-      //icons: <MdOutlineDashboard size={30} />,
-      label: 'Dashboard'
-    },
-    {
-      //icons: <CiSettings size={30} />,
-      label: 'Setting'
-    },
-    {
-      //icons: <IoLogoBuffer size={30} />,
-      label: 'Log'
-    },
-    {
-      //icons: <TbReportSearch size={30} />,
-      label: 'Report'
-    }
-  ]
-
-
 export default function Navbar ({ setSign, sign }) {
 
     function changeSign(signClass){
@@ -43,8 +15,7 @@ export default function Navbar ({ setSign, sign }) {
                     text-white offcanvas-md offcanvas-start'>
           <button style={{position: 'absolute', right: '2px', top: '2px'}} type="button" class="btn-close d-md-none text-reset" data-bs-target="#sidebar" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           <div className='navbar__header'>
-            <i class="fa-solid fa-face-smile navbar__header-img"></i>
-            
+            <img src='/logo.svg'></img>        
           </div>
           
             <ul className='navbar__pagelist'>

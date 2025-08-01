@@ -48,8 +48,8 @@ const CollectionSlide = function(){
         setChosenButton(name)
         setTab(name)
     }
-    console.log(collections)
-    console.log(playlists)
+    //console.log(collections)
+    //console.log(playlists)
 
     const navigate = useNavigate();
 
@@ -61,16 +61,18 @@ const CollectionSlide = function(){
                 <ChooseButton isActive={chosenButton=='collections'} onClick={() => makeChosen("collections")}>Коллекции</ChooseButton>
             </div>
             <div className="slide-container">
-                { tab == 'collections' && collections && collections.length > 0 &&  collections.map(function(collection){
-                    let tracks = collection.tracks
-                    let albumInfo = { 
-                        id: collection.id,
-                        cover: collection.cover,
-                        description: collection.description,
-                        title: collection.title,
+                { tab == 'collections' ? (
+                    collections && collections.length > 0 ? (
+                        collections.map(function(collection){
+                        let tracks = collection.tracks
+                        let albumInfo = { 
+                            id: collection.id,
+                            cover: collection.cover,
+                            description: collection.description,
+                            title: collection.title,
 
-                      }
-                      console.log(albumInfo)
+                        }
+                      //console.log(albumInfo)
                     return(
                         <Link to="/tracks_list" className='slide-container__collection-cover col-xs-12' style={
                             { background: `url(${collection.cover}) 50% 50%/cover no-repeat`,
@@ -83,13 +85,34 @@ const CollectionSlide = function(){
                             state={{ tracks, albumInfo }}>
                         </Link>
                     )
-                })}
-                {tab == 'playlists' && 
+                })
+            
+                    ):
+                        <div>
+                            <p className="instruction-container">
+                                Здесь отображаются коллекции, которые вам понравились. Пока таких нет.<hr/>
+                                Чтобы добавить коллекцию в "понравившиеся", нажмите на странице коллекции 
+                                кнопку с символом сердца (
+                                <span>
+                                    <i className="bi bi-heart text-danger"></i>
+                                </span>
+                                )
+                                <br/>
+                                Коллекции расположены на главной странице (
+                                <span>
+                                    <i className="fa-solid fa-house"></i>
+                                </span>
+                                )
+                            </p>
+                        </div>
+                    ) :
+            
+                tab == 'playlists' && 
                 <>
                     <Link to='/favourite_tracks' className='slide-container__favorite'>
                         <span>Любимые</span>
                     </Link>
-                    <div className='slide-container__addplaylist col-xs-12' onClick={async () => {
+                    <div className='slide-container__addplaylist addplaylist-button col-xs-12' onClick={async () => {
                             try {
                             
                             const playlistData = await doPlayListCreation();
@@ -104,13 +127,15 @@ const CollectionSlide = function(){
                             } catch (error) {
                             console.error("Ошибка при создании плейлиста", error);
                         }}}>
+                        <span class="addplaylist-button__text">добавить плейлист </span>
                         <i class="fa fa-plus-square" aria-hidden="true"></i>
                     </div>
                 </>
                 }
                 
                 
-                { tab == 'playlists' && playlists && playlists.length > 0 &&  playlists.map(function(playlist){
+                { tab == 'playlists' && playlists && playlists.length > 0 && (
+                    playlists.map(function(playlist){
                     let albumInfo = { 
                         id: playlist.id,
                         cover: playlist.cover,
@@ -118,7 +143,7 @@ const CollectionSlide = function(){
                         title: playlist.title,
                         key: location.key,
                       }
-                      console.log(albumInfo)
+                      //console.log(albumInfo)
                     let path = `/playlist_page/${albumInfo.id}`;
                     return(
                         
@@ -133,7 +158,9 @@ const CollectionSlide = function(){
                             state = {{ albumInfo }}>
                         </Link>
                     )
-                })}
+                })
+                )
+            }
             </div>
             
         </div>

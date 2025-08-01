@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { BACKEND_DOMAIN } from '../../shared/config/names'
 import axios from 'axios';
 //import './registration.css'
 
@@ -41,9 +42,9 @@ export default function Login(){
 
     async function getToken(event){
         event.preventDefault();
-        console.log("getToken")
+        ////console.log("getToken")
 
-        const tokenResponse = await axios.post('http://127.0.0.1/api/api/token/', {
+        const tokenResponse = await axios.post(BACKEND_DOMAIN + 'api/token/', {
             username: email,
             password: password
         });
@@ -53,8 +54,8 @@ export default function Login(){
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('accessToken', accessToken); // Сохраняем в localStorage
 
-        console.log(accessToken);
-        console.log(refreshToken);
+        //console.log(accessToken);
+        //console.log(refreshToken);
 
         navigate('/', {replace: true})
 

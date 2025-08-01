@@ -31,9 +31,12 @@
 
 .no-tracks {
   display: flex;
-  flex: 1;
   justify-content: center;
   align-items: center;
+  height: 100%;
+}
+.playlist-content{
+  flex: 1 1 auto;
 }
 .editors-concealer{
   width: 100%;

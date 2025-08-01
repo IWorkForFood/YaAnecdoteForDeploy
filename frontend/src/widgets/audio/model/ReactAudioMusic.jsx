@@ -41,7 +41,7 @@ const AudioTracks = ({ getCollection}) => {
 
 
 
-
+/*
   // Обработчик воспроизведения/паузы
   const handlePlayPause = () => {
     if (!currentTrack) return;
@@ -105,6 +105,7 @@ const AudioTracks = ({ getCollection}) => {
       audioRef.current.play();
       setIsPlaying(true);
     }, 10);
+    console.log('current playlist:', playlist)
   };
 
   // Предыдущий трек
@@ -121,6 +122,7 @@ const AudioTracks = ({ getCollection}) => {
       setIsPlaying(true);
     }, 10);
   };
+  */
 
   return (
     <div>

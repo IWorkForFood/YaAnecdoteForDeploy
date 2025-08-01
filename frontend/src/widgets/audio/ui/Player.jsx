@@ -15,7 +15,7 @@ export default function Player() {
     const fetchPlaylists = async () => {
       try {
         const response = await doPlaylistReceiving();
-        console.log("Fetched playlists:", response);
+        //console.log("Fetched playlists:", response);
 
         if (response && response.length > 0) {
           const playlistsMap = {};
@@ -47,23 +47,23 @@ export default function Player() {
     progress, currentTime, progressRef
   } = usePlayer();
 
-  if (!currentTrack) return null;
+  if (!currentTrack.current) return null;
 
   const addCurrentTrackToPlaylist = async function (playlist){
     try {
       // Проверяем, что playlist и currentTrack существуют
-      if (!playlist || !currentTrack) {
+      if (!playlist || !currentTrack.current) {
           throw new Error('Плейлист или текущий трек не предоставлены');
       }
     let usedList = playlist.tracks
-    console.log("usedList", usedList)
+    //console.log("usedList", usedList)
     let tracks = usedList.map(track => track.id)
-    tracks.push(currentTrack.id)
+    tracks.push(currentTrack.current.id)
     let trackObj = { track_ids:tracks }
     //doPlaylistDataPatching(playlist.id, trackObj)
 
     const updatedPlaylist = await doPlaylistDataPatching(playlist.id, trackObj);
-    console.log('Track added successfully:', updatedPlaylist);
+    //console.log('Track added successfully:', updatedPlaylist);
 
     // Обновляем состояние playlists
     setPlaylists(prev => ({
@@ -82,10 +82,10 @@ export default function Player() {
          alignItems: "center", justifyContent: "space-between" }}>
 
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div style={{ width: 60, height: 60, backgroundImage: `url(${currentTrack.cover})`, backgroundSize: 'cover', borderRadius: 8 }} />
+          <div style={{ width: 60, height: 60, backgroundImage: `url(${currentTrack.current.cover})`, backgroundSize: 'cover', borderRadius: 8 }} />
           <div style={{ marginLeft: 10 }}>
-            <h4 style={{ margin: 0 }}>{currentTrack.title}</h4>
-            <small>{currentTrack.author?.map(a => a.name).join(', ')}</small>
+            <h4 style={{ margin: 0 }}>{currentTrack.current.title}</h4>
+            <small>{currentTrack.current.author?.map(a => a.name).join(', ')}</small>
           </div>
         </div>
 
@@ -97,10 +97,10 @@ export default function Player() {
         <nav className={`choise ${isOpen ? "active" : ""}`} ref={menuRef}>
           <ul className="choise__list ">
             {playlists && Object.values(playlists).map((playlist) => {
-              console.log("playlist -s", playlist)
-              console.log("playlists us of likes", playlist.track_ids)
+              //console.log("playlist -s", playlist)
+              //console.log("playlists us of likes", playlist.track_ids)
               const userLikes = playlist.track_ids || []
-              const isSelected = userLikes.some(item => item === currentTrack.id);
+              const isSelected = userLikes.some(item => item === currentTrack.current.id);
               return(
                 <li 
                 className={`choise__item ${isSelected ? "selected" : ""}`}
@@ -122,19 +122,19 @@ export default function Player() {
       
 
       <div className="player-controls">
-      <button  class="controls-button controls-prev" onClick={handleNext}>
-        <i class="bi bi-skip-start-fill fs-3"></i>
-      </button>
-        
-      <button onClick={handlePlayPause} class="controls-button controls-play">
-        {isPlaying ?
-        <i class="bi bi-pause-fill fs-1 pause-icon"></i> :
-        <i class="bi bi-play-fill fs-1 play-icon"></i>
-        }
-      </button>
+        <button  class="controls-button controls-prev" onClick={handlePrev}>
+          <i class="bi bi-skip-start-fill fs-3"></i>
+        </button>
+          
+        <button onClick={handlePlayPause} class="controls-button controls-play">
+          {isPlaying ?
+          <i class="bi bi-pause-fill fs-1 pause-icon"></i> :
+          <i class="bi bi-play-fill fs-1 play-icon"></i>
+          }
+        </button>
 
         <button  class="controls-button controls-next" onClick={handleNext}>
-        <i class="bi bi-skip-end-fill fs-3"></i>
+          <i class="bi bi-skip-end-fill fs-3"></i>
         </button>
       </div>
 
@@ -150,7 +150,7 @@ export default function Player() {
         <div ref={progressRef} style={{ height: 4, background: '#555', position: 'relative', marginTop: 10 }}>
           <div style={{ width: `${progress}%`, height: '100%', background: '#ffc107' }} />
         </div>
-        <div style={{ fontSize: 12, color: '#aaa' }}>{currentTime} / {currentTrack.duration}</div>
+        <div style={{ fontSize: 12, color: '#aaa' }}>{currentTime} / {currentTrack.current.duration}</div>
       </div>
     </div>
     /*

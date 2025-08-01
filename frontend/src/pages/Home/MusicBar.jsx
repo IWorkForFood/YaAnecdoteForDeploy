@@ -11,14 +11,10 @@ import Carousel from '../../widgets/carousel/Carousel'
 //import getTracks from '../../shared/api/audio_requests/GettingTracks'
 
 
-
-
-
-
-export default function MisicBar() {
+export default function MusicBar() {
 
     getUserInfo()
-    console.log(localStorage.getItem('userId'))
+    //console.log(localStorage.getItem('userId'))
     let userId = localStorage.getItem('userId')
 
     const [tracks, setTracks] = useState([])
@@ -30,14 +26,23 @@ export default function MisicBar() {
     const { setPlaylist, setTrack } = usePlayer();
 
     const getReorderedTracksCallback = useCallback(
-        () => getReorderedTracks(), []
+        () => { 
+            getReorderedTracks().then(response => console.log('wtf', response))  
+        }, []
     )
 
-    const setTracksCallback = useCallback(() => {
-        if (reorderedTracks?.tracks?.length > 0) {
-          setTrack(reorderedTracks.tracks[0]);
+    const setOurTracks = async () => {
+        try{
+            const data = await getReorderedTracks()
+            if (data?.tracks?.length > 0) {
+                setTrack(data.tracks[0]);
+                setPlaylist(data.tracks);
+            }
+        }catch (error){
+            console.error("failed to get reordered tracks")
         }
-      }, [reorderedTracks, setTrack]);
+        
+      }
     
 
     useEffect(() => {
@@ -50,7 +55,7 @@ export default function MisicBar() {
     }
     }, [tracks, userId]);
 
-    console.log(activeLikes)
+    //console.log(activeLikes)
 
     async function getTracks(){
         api.get('/v1/music/track/')
@@ -98,7 +103,7 @@ export default function MisicBar() {
         }));
     };
 
-    const seTrackForSlider = (track) => {
+    const setTrackForSlider = (track) => {
         setTrack(track)
     }
     
@@ -107,8 +112,9 @@ export default function MisicBar() {
             <div class="Music-collector container-fluid">
                 <div class="main-img-and-tracks row">
                     <AudioTracks getCollection={getReorderedTracksCallback}></AudioTracks>
-                    <div class="main-track-img col-12 col-md-7" onClick={ setTracksCallback }> {/*здесь*/}
-                     <i class="fa-solid fa-play"></i>
+                    <div class="main-track-img col-12 col-md-7" onClick={ setOurTracks }>
+                        <i class="fa-solid fa-play"></i>
+                        <span class="main-track-img__text">Случайный трек</span>
                     </div>
                     
 
@@ -136,7 +142,7 @@ export default function MisicBar() {
                                             {group.map((track) => (
                                                 <div className='top-track-list__repr-wrapper'
                                                 key={track.id}
-                                                onClick={() => seTrackForSlider(track)}
+                                                onClick={() => { setTrackForSlider(track); setPlaylist(tracks)}}
                                                 >
                                                 <div 
                                                 className='top-track-list__representation'

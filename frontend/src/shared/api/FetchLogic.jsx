@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { BACKEND_DOMAIN } from '../config/names'
 import { getCookie } from 'react-use-cookie';
 
 // Создаем экземпляр axios
 const api = axios.create({
-  baseURL: 'http://127.0.0.1/api/api/', // Базовый URL вашего API
+  baseURL: BACKEND_DOMAIN + 'api/', // Базовый URL вашего API
   headers: {
     'Content-Type': 'application/json',
   },
@@ -15,7 +16,7 @@ const refreshAccessToken = async () => {
     const refreshToken = localStorage.getItem('refreshToken');
     if (!refreshToken) throw new Error('No refresh token available');
 
-    const response = await axios.post('http://127.0.0.1/api/api/token/refresh/', {
+    const response = await axios.post( BACKEND_DOMAIN + 'api/token/refresh/', { // http://127.0.0.1/api/
       refresh: refreshToken,
     });
 
@@ -33,7 +34,7 @@ api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('accessToken');
     const csrfToken = getCookie('csrftoken');
-    console.log(token)
+    //console.log(token)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

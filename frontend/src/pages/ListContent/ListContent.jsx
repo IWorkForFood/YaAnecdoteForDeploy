@@ -16,7 +16,7 @@ export default function ListContent({tracks, albumInfo}) {
   const [ activeCollectionLike, setActiveCollectionLike ] = useState(albumInfo.isLiked)
 
   getUserInfo()
-  console.log(localStorage.getItem('userId'))
+  //console.log(localStorage.getItem('userId'))
   let userId = localStorage.getItem('userId')
 
   const doTrackSetting = useCallback(
@@ -26,7 +26,7 @@ export default function ListContent({tracks, albumInfo}) {
   async function setCurrentCollection(){
     api.get(`/v1/music/authors_collection/${albumInfo.id}`)
     .then(response => {
-      console.log('номер:', Number(userId))
+      //console.log('номер:', Number(userId))
       setActiveCollectionLike(response.data.user_of_likes.includes(Number(userId)))
     })
     .catch(error => console.log(error))
@@ -72,9 +72,17 @@ export default function ListContent({tracks, albumInfo}) {
             </p>
             <p>64 анека ~ 16 hrs+</p>
             <div className="button-toolbar">
-              <button className="btn btn-secondary rounded-pill" >
+
+              { tracks.length > 0 ? 
+              <button className="btn btn-secondary rounded-pill"  onClick={ () => {setTrack(tracks[0])}} >
                 <i class="bi bi-play-fill"></i> Play
               </button>
+                : 
+              <button className="btn btn-secondary rounded-pill">
+                <i class="bi bi-play-fill"></i> Play
+              </button>
+              }
+
               <button className="btn btn-secondary rounded-pill"
               onClick={() => toggleCollectionLike(albumInfo.id, '/v1/music/authors_collection/')}>
                 <i class={`bi bi-heart${activeCollectionLike ? "-fill" : ""}  text-danger`}></i> Like
@@ -94,7 +102,7 @@ export default function ListContent({tracks, albumInfo}) {
       <AudioTracks getCollection={ doCollectionReceivingCallback }></AudioTracks>
       <div>
         {tracks && tracks.map(track => (
-          <TrackBar setTrack = {doTrackSetting} track={ track }></TrackBar>
+          <TrackBar setTrack = {doTrackSetting} track={ track } onClick={() => {/*setPlaylist(doCollectionReceivingCallback())}*/}}></TrackBar>
         ))}
       </div>
       

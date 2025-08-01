@@ -5,12 +5,20 @@ const PlayerContext = createContext();
 
 export function PlayerProvider({ children }) {
   const [playlist, setPlaylist] = useState([]);
-  const [currentTrack, setCurrentTrack] = useState(null);
+  const [userPlaylists, setUserPlaylists] = useState([])
+  const playlistRef = useRef([]);
+  //const [currentTrack, setCurrentTrack] = useState(null);
+
+  useEffect(() => {
+    playlistRef.current = playlist;
+  }, [playlist]);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState('00:00');
   const [listenStartTime, setListenStartTime] = useState(null);
 
+  const currentTrack = useRef(null)
   const audioRef = useRef(null);
   const progressRef = useRef(null);
 
@@ -56,13 +64,15 @@ export function PlayerProvider({ children }) {
   //---Для обновления списка добавляемых треков
 
   useEffect(() => {
-    fetchPlaylists();
+    fetchUserPlaylists();
   }, []);
 
-  const fetchPlaylists = async () => {
+
+
+  const fetchUserPlaylists = async () => {
     try {
       const response = await api.get('/v1/music/users_collection/');
-      setPlaylists(response.data);
+      setUserPlaylists(response.data);
       console.log('In Player Context:', response.data)
     } catch (error) {
       console.error('Ошибка загрузки плейлистов:', error);
@@ -70,39 +80,22 @@ export function PlayerProvider({ children }) {
   };
 
   const updatePlaylists = async () => {
-    await fetchPlaylists();
+    await fetchUserPlaylists();
   };
+
+  useEffect(() => {
+    if (currentTrack.current) {
+      console.log("Трек обновлён:", currentTrack.current.title, "| ID:", currentTrack.current.id);
+    }
+  }, [currentTrack.current]);
 
 
   //---
 
-  useEffect(() => {
-    console.log("изменение:", playlist)
-  }, [playlist])
-
   // Установка нового трека
   const setTrack = (track) => {
-    if (!track?.audio_file) return;
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
 
-    const audio = new Audio(track.audio_file);
-    audioRef.current = audio;
-    setCurrentTrack({ ...track, duration: '00:00' }); // временно
-    setProgress(0);
-    setCurrentTime('00:00');
-    setTimeout(() => audioRef.current.play(), 50)
-    setIsPlaying(true);
-    setListenStartTime(Date.now());
-    
-
-    audio.addEventListener('loadeddata', () => {
-      setCurrentTrack(prev => ({ ...prev, duration: toMinAndSec(audio.duration) }));
-    });
-
-    audio.addEventListener('timeupdate', () => {
+    const handleTimeUpdate = () => {
       const { currentTime, duration } = audio;
       const percent = (currentTime / duration) * 100;
       setProgress(percent);
@@ -111,23 +104,67 @@ export function PlayerProvider({ children }) {
       if (isPlaying && !listenStartTime) {
         setListenStartTime(Date.now());
       }
-    });
+    }
 
-    audio.addEventListener('ended', () => {
+    const handleEnded = () => {
+      console.log("ENDEDEEDEDEDEDEDED")
       if (listenStartTime) {
         sendListeningData(track, listenStartTime, Date.now());
         setListenStartTime(null);
       }
-      handleNext();
-    });
+
+      handleTrackEnd();
+      
+    }
+
+    const handleLoadedData = () => {
+      //setCurrentTrack(prev => ({ ...prev, duration: toMinAndSec(audio.duration) }));
+      currentTrack.current = { ...track, duration: toMinAndSec(audio.duration) }
+    }
+
+    if(audioRef.current){
+      audioRef.current.pause();
+      audioRef.current.removeEventListener('timeupdate', handleTimeUpdate)
+      audioRef.current.removeEventListener('ended', handleEnded)
+      audioRef.current.removeEventListener('loadeddata', handleLoadedData)
+      audioRef.current = null;
+    }
+
+    console.log('id after set', track.id)
+    console.log('new?', track)
+    
+    console.log("new track:", track.title)
+    
+    if (!track?.audio_file) return;
+
+    const audio = new Audio(track.audio_file);
+    audioRef.current = audio;
+
+    audio.addEventListener('loadeddata', handleLoadedData);
+
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+
+    audio.addEventListener('ended', handleEnded);
+
+   // setCurrentTrack({ ...track, duration: '00:00' }); // временно
+    currentTrack.current = { ...track, duration: '00:00' }
+    setProgress(0);
+    setCurrentTime('00:00');
+    setTimeout(() => audioRef.current.play(), 50)
+    setIsPlaying(true);
+    setListenStartTime(Date.now());
+    console.log(currentTrack.current, audioRef.current, " id", audioRef.current)
   };
+
+
 
   const handlePlayPause = () => {
     if (!audioRef.current) return;
+    console.log("A?")
     if (isPlaying) {
       if (listenStartTime) {
 
-        sendListeningData(currentTrack, listenStartTime, Date.now());
+        sendListeningData(currentTrack.current, listenStartTime, Date.now());
         setListenStartTime(null);
       }
       audioRef.current.pause();
@@ -138,36 +175,87 @@ export function PlayerProvider({ children }) {
     setIsPlaying(!isPlaying);
   };
 
-  const handleNext = () => {
-    if (listenStartTime) {
-        sendListeningData(currentTrack, listenStartTime, Date.now());
-        setListenStartTime(Date.now());
-      }
-    if (!playlist.length || !currentTrack) return;
-    const index = playlist.findIndex(t => t.id === currentTrack.id);
-    const next = playlist[(index + 1) % playlist.length];
-    setTrack(next);
-    setTimeout(() => audioRef.current.play(), 50);
-    setIsPlaying(true);
+/*
+  const handleNextClean = () => {
+
     
+    if (!playlist.length || !currentTrack.current) return;
+
+    console.log('Тип currentTrack.id:', typeof currentTrack.current.id);
+    playlist.forEach(t => console.log('Тип id в playlist:', typeof t.id, 'id:', t.id));
+
+    console.log("playlist", playlist)
+    console.log('id:', currentTrack.current.id)
+    const index = playlist.findIndex(t => t.id === currentTrack.current.id);
+    console.log('index:', index)
+    console.log('length:', playlist.length)
+    console.log((0+1)%3)
+    const nextIndex = (index + 1) % playlist.length;
+    console.log(`1-ый indx${index}`, playlist[index], `2-ой indx${nextIndex}`, playlist[nextIndex])
+    console.log('new index:', nextIndex)
+    playlist.forEach((track, index) => {
+      console.log('cycle id', track.id, "index ", index)
+    });
+    
+    // Проверка на зацикливание
+    //if (nextIndex === index) return; 
+
+    const nextTrack = playlist[nextIndex];
+    console.log('sled track:', nextTrack)
+    console.log(playlist[nextIndex].title)
+    setTrack(nextTrack);
+    console.log("New id:", currentTrack.current.id)
+  };
+*/
+
+ const handleNextClean = () => {
+    if (!playlistRef.current.length || !currentTrack.current) return;
+
+    const index = playlistRef.current.findIndex(t => t.id === currentTrack.current.id);
+    const nextIndex = (index + 1) % playlistRef.current.length;
+    const nextTrack = playlistRef.current[nextIndex];
+
+    setTrack(nextTrack);
   };
 
   const handlePrev = () => {
-    if (listenStartTime) {
-        sendListeningData(currentTrack, listenStartTime, Date.now());
-        setListenStartTime(Date.now());
-      }
-    if (!playlist.length || !currentTrack) return;
-    const index = playlist.findIndex(t => t.id === currentTrack.id);
-    const prev = playlist[(index - 1 + playlist.length) % playlist.length];
-    setTrack(prev);
-    setTimeout(() => audioRef.current.play(), 50);
-    setIsPlaying(true);
+    if (!playlistRef.current.length || !currentTrack.current) return;
+
+    const index = playlistRef.current.findIndex(t => t.id === currentTrack.current.id);
+    const prevIndex = (index - 1 + playlistRef.current.length) % playlistRef.current.length;
+
+    setTrack(playlistRef.current[prevIndex]);
+  };
+
+  const handleNext = () => {
+    handleNextClean();
+  };
+/*
+  const handlePrev = () => {
+    if (!playlist.length || !currentTrack.current) return;
     
+    const index = playlist.findIndex(t => t.id === currentTrack.current.id);
+    const prevIndex = (index - 1 + playlist.length) % playlist.length;
+
+
+    
+    setTrack(playlist[prevIndex]);
+
+
+  };
+  */
+
+  const handleTrackEnd = () => {
+    console.log("current track id:", currentTrack.current.id)
+    if (listenStartTime) {
+      sendListeningData(currentTrack.current, listenStartTime, Date.now());
+    }
+    handleNextClean(); // Без повторной отправки статистики
   };
 
   const value = {
     playlist,
+    playlistRef,        // для внутреннего использования (например, в колбэках)
     currentTrack,
     isPlaying,
     progress,

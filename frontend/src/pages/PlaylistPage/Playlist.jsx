@@ -52,9 +52,9 @@ export default function Playlist({ albumId }) {
     )
 
     useEffect(() => {
-        console.log('Dna');
+        //console.log('Dna');
         fetchPlaylistCallback();
-        console.log('Йоу');
+        //console.log('Йоу');
     }, [albumId, editMode]);
 
     useEffect(() => {
@@ -114,7 +114,7 @@ export default function Playlist({ albumId }) {
 
         try {
             const response = await api.patch(`/v1/music/users_collection/${albumInfo.id}`, formData);
-            console.log('Файл успешно отправлен:', response.data);
+            //console.log('Файл успешно отправлен:', response.data);
             setImgFile(null);
             setEditMode((prev) => ({ ...prev, img: false }));
             setAlbumInfo(response.data); // Обновляем albumInfo, если сервер возвращает новые данные
@@ -138,9 +138,15 @@ export default function Playlist({ albumId }) {
     const MainButtonList = function ({ albumInfo, navigate }) {
         return (
             <div className="button-toolbar">
-                <button className="btn btn-secondary rounded-pill" onClick={ () => {setTrack(trackList[0])}}>
-                    <i className="bi bi-play-fill"></i> Play
-                </button>
+                { trackList.length > 0 ? 
+                    <button className="btn btn-secondary rounded-pill"  onClick={ () => {setTrack(trackList[0])}} >
+                        <i class="bi bi-play-fill"></i> Play
+                    </button>
+                        : 
+                    <button className="btn btn-secondary rounded-pill">
+                        <i class="bi bi-play-fill"></i> Play
+                    </button>
+                }
                 <button
                     className="btn btn-secondary rounded-pill"
                     onClick={() => {
@@ -253,7 +259,7 @@ export default function Playlist({ albumId }) {
     // конец функций для управления обновлением плейлиста
 
     return (
-        <div className="container-fluid py-3">
+        <div className="container-fluid py-3 playlist-content">
             <div className="row gy-3">
                 <div className="col-md-3">
                     <input

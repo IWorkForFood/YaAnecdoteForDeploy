@@ -1,7 +1,6 @@
-import React from 'react'
-
 import { useState, useEffect } from 'react';
-import { useParams, Link, Outlet } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { BACKEND_DOMAIN } from '../../shared/config/names'
 import './Activates.css'
 
 export default function Activates(){
@@ -9,12 +8,12 @@ export default function Activates(){
    
     const { uid, token } = useParams(); // Получаем uid и token из URL
     const [message, setMessage] = useState('');
-    console.log('Начинается активация, uid:', uid, 'token:', token);
+    //console.log('Начинается активация, uid:', uid, 'token:', token);
 
     useEffect(() => {
         const activateUser = async () => {
             try {
-                const response = await fetch('http://127.0.0.1/api/api/v1/accounts/activation/', {
+                const response = await fetch( BACKEND_DOMAIN + 'api/v1/accounts/activation/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

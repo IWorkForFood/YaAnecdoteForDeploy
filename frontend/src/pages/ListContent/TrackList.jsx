@@ -12,7 +12,7 @@ import AdaptiveHeader from '../../widgets/adaptiveHeader/AdaptiveHeader'
 export default function TrackList(){
     const location = useLocation();
     const { tracks, albumInfo } = location.state
-    console.log(tracks)
+    //console.log(tracks)
     const [sign, setSign] = useState('home');
         
 
