@@ -1,6 +1,5 @@
 ![logo](https://github.com/user-attachments/assets/64b1f316-4587-486b-a601-a3af4c7dafdd)# YaAnecdote — веб-приложение для прослушивания и организации анекдотов
 
-![Uploadi<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
 
 *Платформа для прослушивания и организации аудио-анекдотов*
 
