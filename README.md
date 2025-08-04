@@ -1,4 +1,6 @@
-![logo](https://github.com/user-attachments/assets/64b1f316-4587-486b-a601-a3af4c7dafdd)# YaAnecdote — веб-приложение для прослушивания и организации анекдотов
+![logo](https://github.com/user-attachments/assets/64b1f316-4587-486b-a601-a3af4c7dafdd)
+
+# YaAnecdote — веб-приложение для прослушивания и организации анекдотов
 
 
 *Платформа для прослушивания и организации аудио-анекдотов*
