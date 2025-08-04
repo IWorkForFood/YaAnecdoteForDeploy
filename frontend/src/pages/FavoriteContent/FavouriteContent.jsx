@@ -44,7 +44,6 @@ export default function ListContent() {
       <div className="row gy-3">
         <div className="col-md-3">
           <div className="image-block">
-
             <img src='/Like_play.jpg' className="img-fluid rounded d-block" alt="clim" />
 
           </div>
