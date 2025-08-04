@@ -45,9 +45,11 @@
 *Главная страница с аудио-анекдотами*
 
 <img width="834" height="457" alt="ManagePlaylists" src="https://github.com/user-attachments/assets/ea489379-7709-4205-930a-e4c1ab130b78" />
+
 *Страница управления плейлистами*
 
 <img width="236" height="137" alt="Adding" src="https://github.com/user-attachments/assets/3c768a12-a4b7-4abb-8f1d-6fabad129283" />
+
 *Добавление анекдота в плейлист*
 
 ---
