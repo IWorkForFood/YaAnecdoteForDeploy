@@ -70,7 +70,7 @@ export default function ListContent({tracks, albumInfo}) {
             <p>
               { albumInfo.description }
             </p>
-            <p>64 анека ~ 16 hrs+</p>
+            <p>64 анека</p>
             <div className="button-toolbar">
 
               { tracks.length > 0 ? 
