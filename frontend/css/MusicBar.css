@@ -1,0 +1,134 @@
+@charset "UTF-8";
+.MusicBar {
+  padding: 0px 20px 0px 15px;
+}
+
+.main-img-and-tracks {
+  margin-bottom: 34px;
+}
+
+.main-track-img {
+  background-color: #609EAF;
+  height: 373px;
+  border-radius: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 60px;
+  transition: font-size 1s;
+  position: relative;
+  overflow: hidden;
+}
+.main-track-img:before {
+  content: "";
+  position: absolute;
+  inset: -30px;
+  background: url("/random-img-background.svg") right center/cover;
+}
+.main-track-img__text {
+  font-size: 40px;
+}
+@media (max-width: 768px) {
+  .main-track-img {
+    font-size: 40px;
+  }
+  .main-track-img__text {
+    font-size: 20px;
+  }
+}
+
+.main-track-img:hover {
+  font-size: 70px;
+  cursor: pointer;
+}
+
+.top-track-list {
+  width: 100%;
+}
+
+.top-track-list__repr-wrapper {
+  padding: 10px 15px;
+  background-color: rgb(21, 21, 21);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.top-track-list__representation {
+  width: 100%;
+  display: flex;
+  flex: stretch;
+}
+
+.top-track-list__track-description {
+  height: auto;
+  padding-left: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.top-track-list__repr-wrapper {
+  margin: 5px 0px;
+  width: 100%;
+}
+
+.like-button {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7px;
+  border: 1px solid #555555;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.last-collections__swipe-list {
+  overflow: hidden;
+  height: 200px;
+  white-space: nowrap;
+  transition-duration: 1s;
+}
+
+.last-collections__swipe-list:hover {
+  overflow-x: scroll;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(193, 193, 193) rgba(0, 0, 0, 0);
+}
+
+/* для Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  height: 12px;
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(193, 193, 193);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(29, 33, 35, 0.5019607843);
+  border-radius: 5px;
+  border: none;
+}
+
+.category-title {
+  font-size: 1.66rem;
+  font-weight: bolder;
+  margin-bottom: 13px;
+}
+
+.item-1 {
+  background-color: aqua;
+}
+
+@media (max-width: 330px) {
+  .choose-button {
+    width: 45%;
+  }
+}

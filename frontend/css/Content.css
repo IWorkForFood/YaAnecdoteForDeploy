@@ -1,0 +1,16 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  flex-grow: 1;
+  background-color: #1D2123;
+  position: relative;
+  padding-bottom: 50px;
+  overflow: hidden;
+}
+
+.button-wrapper__separator {
+  display: inline-block;
+  width: 20px;
+}

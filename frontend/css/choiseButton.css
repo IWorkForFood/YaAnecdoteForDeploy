@@ -15,7 +15,7 @@
   width: 200px;
   height: 100px;
   padding: 25px;
-  background-color: rgba(29, 33, 35, 0.5019607843);
+  background-color: #1D2123;
   border: 1px solid rgb(255, 217, 0);
   text-align: left;
   opacity: 0;
@@ -40,6 +40,9 @@
 .choise__list .choise__item {
   cursor: pointer;
   color: #828282;
+}
+.choise__list .choise__item.selected {
+  background-color: rgba(255, 217, 66, 0.861);
 }
 .choise__list .choise__item:nth-child(n+2) {
   margin-top: 15px;
