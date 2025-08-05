@@ -82,6 +82,11 @@ cd YaAnecdoteForDeploy
 //сделайте entrypoin.sh в папке backend исполняемым:
 chmod +x entrypoint.sh
 
+//Создайте и выполните миграции
+
+docker exec -it id_контейнера_с_backend python manage.py makemigrations
+docker exec -it id_контейнера_с_backend python manage.py migrate
+
 Далее соберите контейнеры при помощи команды из корневой папки:
 docker-compose up --build
 ```
